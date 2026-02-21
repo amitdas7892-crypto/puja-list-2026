@@ -14,16 +14,14 @@
 
         .container { padding: 0 16px; max-width: 480px; margin: 0 auto; }
 
-        /* Social & Map Buttons */
+        /* Social Links */
         .social-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .s-btn { padding: 10px; border-radius: 12px; border: none; font-weight: 800; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; }
-        .fb-btn { background: var(--fb); color: white; }
-        .map-btn { background: #34A853; color: white; }
+        .s-btn { padding: 12px; border-radius: 12px; border: none; font-weight: 800; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #fff; }
 
         /* Navigation */
         .nav-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin: 20px 0; }
         .nav-btn { border: 1px solid rgba(255,255,255,0.1); background: var(--card); color: #94a3b8; padding: 10px 2px; cursor: pointer; border-radius: 10px; font-weight: 700; font-size: 11px; }
-        .nav-btn.active { background: var(--neon); color: #000; border-color: var(--neon); box-shadow: 0 0 10px var(--neon); }
+        .nav-btn.active { background: var(--neon); color: #000; box-shadow: 0 0 10px var(--neon); }
 
         .balance-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; margin-bottom: 15px; }
         
@@ -31,20 +29,16 @@
         .year-pill { background: var(--card); border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 10px; cursor: pointer; color: #94a3b8; white-space: nowrap; font-size: 12px; }
         .year-pill.active { border-color: #fff; color: #fff; }
 
-        /* 🔍 Search Box Styling */
-        .search-container { margin-bottom: 20px; }
+        /* 🔍 Search Box Fixed Styling */
+        .search-container { margin: 10px 0 20px 0; position: sticky; top: 10px; z-index: 100; }
         .search-container input { 
-            width: 100%; padding: 14px 18px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.08); color: #fff; outline: none; box-sizing: border-box; font-size: 15px;
+            width: 100%; padding: 15px; border-radius: 15px; border: 2px solid var(--neon);
+            background: #0f172a; color: #fff; outline: none; box-sizing: border-box; font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .search-container input:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
 
         .list-card { background: var(--card); border-radius: 25px; padding: 5px; margin-bottom: 30px; }
         .row-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        /* Gallery */
-        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .gallery-img { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; border: 1px solid var(--neon); }
 
         .footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 20px; }
         .m-name { font-family: 'Dancing Script', cursive; font-size: 26px; color: var(--gold); display: block; margin-top: 5px; }
@@ -54,16 +48,19 @@
 
 <header>
     <div class="main-title">NARAYANPUR <br> PUJA COMMITTEE</div>
-    
     <div class="container">
         <div class="social-links">
-            <a href="https://facebook.com/AapkaPageLink" target="_blank" class="s-btn fb-btn">🔵 FB PAGE</a>
-            <a href="http://maps.google.com" target="_blank" class="s-btn map-btn">📍 LOCATION</a>
+            <a href="#" class="s-btn" style="background: var(--fb);">🔵 FB PAGE</a>
+            <a href="#" class="s-btn" style="background: #34A853;">📍 LOCATION</a>
         </div>
     </div>
 </header>
 
 <div class="container">
+    <div class="search-container">
+        <input type="text" id="searchInput" oninput="runSearch()" placeholder="🔍 सदस्य का नाम यहाँ लिखें...">
+    </div>
+
     <div class="nav-grid">
         <button id="btn-yagya" class="nav-btn active" onclick="switchTab('yagya')">यज्ञ</button>
         <button id="btn-burimaa" class="nav-btn" onclick="switchTab('burimaa')">बुरी माँ</button>
@@ -74,7 +71,7 @@
     <div class="balance-card">
         <small id="sumLabel" style="color:#94a3b8">KUL JAMA</small>
         <div id="totalVal" style="font-size: 30px; font-weight: 800; margin: 5px 0; color: var(--neon);">₹0</div>
-        <div style="font-size: 11px; color: var(--gold);">Saal: <span id="activeYearLabel">2026</span></div>
+        <div style="font-size: 11px;">YEAR: <span id="activeYearLabel" style="color:var(--gold)">2026</span></div>
     </div>
 
     <div class="year-scroll">
@@ -85,10 +82,6 @@
         <button class="year-pill" onclick="setYear('2022', this)">2022</button>
         <button class="year-pill" onclick="setYear('2021', this)">2021</button>
         <button class="year-pill" onclick="setYear('2020', this)">2020</button>
-    </div>
-
-    <div class="search-container">
-        <input type="text" id="searchInput" onkeyup="filterNames()" placeholder="🔍 सदस्य या सामान खोजें...">
     </div>
 
     <div class="list-card" id="mainList"></div>
@@ -104,8 +97,15 @@
     let currentYear = '2026';
     const members = ["APU DAS", "AJAY DAS", "SASTY DAS", "LULA DAS", "SAMBHU DAS", "PRAKASH DAS", "DILIP PAUL", "DIPU PAUL", "SUKTU DAS", "LALTU DAS", "SANJIT DAS", "AJIT DAS", "TAPAN DAS", "SUMAN RAY", "SUDHIR RAY", "PAPPU THAKOOR", "PREAM THAKOOR", "SOPAN DAS", "SANATAN DAS", "TINKU DAS", "GOPAL DAS", "RAM DAS", "DEBU DAS", "HARANU DAS", "UTTAM DAS", "GOUTAM DAS", "SHIVANI DAS", "SITA DAS", "PUTUL DAS", "RINKU DAS", "RATAN DAS", "MANIK DAS", "RATAN GHOSH", "LAXMAN DAS", "DILIP DAS", "KILIP DAS", "CHILKA DAS", "LALIT DAS", "PINTU DAS"];
 
-    // Sample data for logic testing
-    const jamaData = { "APU DAS": 500, "AJAY DAS": 2500 };
+    // Search function jo turant kaam karega
+    function runSearch() {
+        let input = document.getElementById('searchInput').value.toUpperCase();
+        let rows = document.getElementsByClassName('row-item');
+        for (let row of rows) {
+            let nameContent = row.getElementsByTagName('b')[0].innerText.toUpperCase();
+            row.style.display = nameContent.includes(input) ? "flex" : "none";
+        }
+    }
 
     function switchTab(t) {
         currentTab = t;
@@ -122,16 +122,6 @@
         render();
     }
 
-    // 🔍 Search Function
-    function filterNames() {
-        let input = document.getElementById('searchInput').value.toUpperCase();
-        let rows = document.getElementsByClassName('row-item');
-        for (let row of rows) {
-            let text = row.innerText.toUpperCase();
-            row.style.display = text.includes(input) ? "flex" : "none";
-        }
-    }
-
     function render() {
         const listDiv = document.getElementById('mainList');
         const target = (currentTab === 'burimaa') ? 500 : 2500;
@@ -139,29 +129,30 @@
         let total = 0;
 
         if (currentTab === 'gallery') {
-            document.getElementById('sumLabel').innerText = "PUJA PHOTOS";
-            listDiv.innerHTML = `<div class="gallery-grid">
-                <img src="https://via.placeholder.com/150" class="gallery-img">
-                <img src="https://via.placeholder.com/150" class="gallery-img">
-            </div><p style="text-align:center; font-size:12px; color:#94a3b8;">Facebook page par saari photos dekhein!</p>`;
+            document.getElementById('sumLabel').innerText = "GALLERY";
+            listDiv.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8;">Photos available on Facebook Page.</div>`;
             return;
         }
 
         if (currentTab === 'kharcha') {
-            document.getElementById('sumLabel').innerText = "KUL KHARCHA ("+currentYear+")";
-            listDiv.innerHTML = `<div class="row-item">Abhi koi kharcha add nahi hai.</div>`;
+            document.getElementById('sumLabel').innerText = "TOTAL KHARCHA";
+            listDiv.innerHTML = `<div class="row-item">No records for ${currentYear}.</div>`;
         } else {
-            document.getElementById('sumLabel').innerText = "KUL JAMA COLLECTION ("+currentYear+")";
+            document.getElementById('sumLabel').innerText = "TOTAL JAMA";
             members.forEach((name, i) => {
-                let j = jamaData[name] || 0; 
-                total += j;
+                let j = 0; 
                 let status = (j >= target) ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">DUE ₹${target-j}</b>`;
-                listDiv.innerHTML += `<div class="row-item"><div>${i+1}. <b>${name}</b><br><small>JAMA: ₹${j}</small></div><div>${status}</div></div>`;
+                listDiv.innerHTML += `<div class="row-item">
+                    <div>${i+1}. <b>${name}</b><br><small style="color:#94a3b8">JAMA: ₹${j}</small></div>
+                    <div>${status}</div>
+                </div>`;
             });
         }
-        document.getElementById('totalVal').innerText = '₹' + total.toLocaleString();
+        // Render hone ke baad search filter wapas apply karo agar kuch likha hai
+        runSearch();
     }
 
+    // Pehli baar list dikhane ke liye
     render();
 </script>
 </body>
