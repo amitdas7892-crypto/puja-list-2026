@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narayanpur Puja List</title>
+    <style>
+        body { font-family: sans-serif; background-color: #fff9c4; margin: 0; padding: 15px; text-align: center; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1 { color: #f57f17; font-size: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #fbc02d; border-radius: 25px; outline: none; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        th { background: #fbc02d; color: white; padding: 10px; }
+        td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+        .paid { color: green; font-weight: bold; }
+        .due { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🙏उत्तर नारायणपुर यज्ञ पूजा कमेटी 2026 🙏</h1>
+        <p>कुल जमा: <b>₹ <span id="totalDisplay">0</span></b></p>
+    </div>
+    <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 Naam khojein...">
+    <table id="pujaTable">
+        <thead>
+            <tr><th>Naam</th><th>Chanda</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>01. sanatan das</td><td>₹2500</td><td class="paid" data-amt="2500">PAID</td></tr>
+            <tr><td>02. tinku das</td><td>₹0</td><td class="due" data-amt="0">DUE</td></tr>
+        </tbody>
+    </table>
+    <script>
+        function search() {
+            var input = document.getElementById("searchInput").value.toUpperCase();
+            var tr = document.getElementById("pujaTable").getElementsByTagName("tr");
+            for (var i = 1; i < tr.length; i++) {
+                tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(input) > -1 ? "" : "none";
+            }
+        }
+        var total = 0;
+        document.querySelectorAll('td[data-amt]').forEach(td => { total += parseInt(td.getAttribute('data-amt')); });
+        document.getElementById('totalDisplay').innerText = total;
+    </script>
+</body>
+</html>
