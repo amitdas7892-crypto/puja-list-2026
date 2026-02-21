@@ -3,73 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Narayanpur Committee - Finance Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Narayanpur Puja Committee - Amit Das</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ff8000; --bg-dark: #0f172a; --card-bg: rgba(255, 255, 255, 0.05); --text-main: #f8fafc; --text-dim: #94a3b8; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%); margin: 0; color: var(--text-main); min-height: 100vh; padding-bottom: 50px; }
-        .container { padding: 0 16px; max-width: 480px; margin: 0 auto; }
-        header { padding: 30px 20px 10px; text-align: center; }
-        .logo-text { font-size: 26px; font-weight: 800; background: linear-gradient(to right, #fff, #ffbd7a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* 🛠️ Admin Panel (Expense Entry) */
-        .admin-box { 
-            background: rgba(239, 68, 68, 0.15); border-radius: 20px; 
-            padding: 15px; margin: 20px 0; border: 1px solid rgba(239, 68, 68, 0.3);
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .admin-box label { font-size: 13px; font-weight: 600; color: #f87171; }
-        .admin-box input { 
-            background: #1e293b; border: 1px solid #f87171; color: white; 
-            padding: 10px; border-radius: 12px; width: 100px; text-align: center; font-weight: 800; outline: none;
-        }
-
-        /* 📊 Balance Summary Card */
-        .balance-card { 
-            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)); 
-            border-radius: 28px; padding: 22px; margin-bottom: 25px; 
-            border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px);
-            text-align: center;
-        }
-        .grand-title { font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 2px; }
-        .grand-val { font-size: 32px; font-weight: 800; margin: 10px 0; color: white; }
+        :root { --primary: #ff8000; --bg-dark: #070b14; --gold: #ffd700; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-dark); margin: 0; color: #fff; min-height: 100vh; }
         
-        .grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-        .stat-item label { font-size: 10px; color: var(--text-dim); display: block; margin-bottom: 5px; }
-        .stat-item span { font-size: 16px; font-weight: 700; }
+        /* ✨ Special Stylish Name Section */
+        .king-header { 
+            padding: 40px 20px; text-align: center; 
+            background: radial-gradient(circle at center, #1a233a 0%, #070b14 100%);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .committee-name { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 4px; color: #94a3b8; display: block; margin-bottom: 10px; }
+        
+        .stylish-name { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 52px; /* Pehle se bada */
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, #ff8000 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); /* Glowing Effect */
+            display: inline-block;
+            transform: rotate(-3deg); /* Thoda stylish tilt */
+        }
 
-        /* Year & Search UI */
-        .year-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; margin-bottom: 10px; }
-        .year-pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 15px; cursor: pointer; color: var(--text-dim); white-space: nowrap; font-weight: 600; }
-        .year-pill.active { border-color: var(--primary); color: var(--primary); background: rgba(255,128,0,0.1); }
+        .container { padding: 0 16px; max-width: 480px; margin: -30px auto 0; }
 
-        .search-box input { width: 100%; padding: 16px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-bottom: 20px; outline: none; box-sizing: border-box; }
+        /* Balance Card with Glass UI */
+        .balance-card { 
+            background: rgba(255, 255, 255, 0.05); border-radius: 30px; padding: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .grand-val { font-size: 38px; font-weight: 800; color: #fff; margin: 10px 0; }
 
-        .list-card { background: var(--card-bg); border-radius: 30px; padding: 10px; border: 1px solid rgba(255,255,255,0.05); }
-        .member-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* Admin Lock Section */
+        .admin-lock-area { margin: 25px 0; }
+        .lock-btn { 
+            width: 100%; padding: 14px; border-radius: 20px; border: 1px solid rgba(255,215,0,0.3);
+            background: rgba(255,215,0,0.05); color: var(--gold); font-weight: 800; cursor: pointer;
+        }
+        .expense-input-box { 
+            display: none; background: rgba(239, 68, 68, 0.1); padding: 20px; 
+            border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.2); margin-top: 15px;
+        }
+
+        .year-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; margin: 20px 0; }
+        .year-pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px 25px; border-radius: 18px; cursor: pointer; color: #94a3b8; font-weight: 700; white-space: nowrap; }
+        .year-pill.active { border-color: var(--gold); color: var(--gold); background: rgba(255,215,0,0.1); }
+
+        .list-card { background: rgba(255,255,255,0.03); border-radius: 30px; padding: 10px; }
+        .member-row { display: flex; align-items: center; justify-content: space-between; padding: 18px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-text">नारायणपुर कमेटी</div>
+<header class="king-header">
+    <span class="committee-name">NARAYANPUR COMMITTEE PORTAL</span>
+    <span class="stylish-name">Amit Das</span>
 </header>
 
 <div class="container">
     
     <div class="balance-card">
-        <span class="grand-title">कुल शुद्ध बचत (2020-2026)</span>
+        <span style="font-size: 11px; color: #94a3b8; letter-spacing: 2px;">PURE SAVINGS (2020-2026)</span>
         <div class="grand-val" id="grandTotal">₹0</div>
-        
-        <div class="grid-stats">
-            <div class="stat-item"><label>साल <span id="yrLabel">2026</span> जमा</label><span id="yrJama" style="color: #4ade80;">₹0</span></div>
-            <div class="stat-item"><label>साल <span id="yrLabel2">2026</span> खर्च</label><span id="yrExp" style="color: #f87171;">₹0</span></div>
+        <div style="display: flex; justify-content: space-around; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+            <div><small style="color:#94a3b8">JAMA</small><br><b id="yrJama" style="color:#4ade80">₹0</b></div>
+            <div><small style="color:#94a3b8">KHARCHA</small><br><b id="yrExp" style="color:#f87171">₹0</b></div>
         </div>
     </div>
 
-    <div class="admin-box">
-        <label>💸 इस साल का खर्चा दर्ज करें:</label>
-        <input type="number" id="inputExp" value="0" oninput="updateFinance()">
+    <div class="admin-lock-area">
+        <button class="lock-btn" id="lockBtn" onclick="openAdmin()">🔐 Click to Enter Expense (Admin)</button>
+        <div class="expense-input-box" id="expBox">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label style="color:#f87171; font-weight:800; font-size:12px;">DAALEY KHARCHA:</label>
+                <input type="number" id="inputExp" value="0" oninput="saveExp()" 
+                       style="background:#000; border:1px solid #f87171; color:white; padding:10px; border-radius:12px; width:110px; text-align:center; font-weight:800;">
+            </div>
+        </div>
     </div>
 
     <div class="year-scroll">
@@ -78,12 +91,6 @@
         <button class="year-pill" onclick="setYear('2024', this)">2024</button>
         <button class="year-pill" onclick="setYear('2023', this)">2023</button>
         <button class="year-pill" onclick="setYear('2022', this)">2022</button>
-        <button class="year-pill" onclick="setYear('2021', this)">2021</button>
-        <button class="year-pill" onclick="setYear('2020', this)">2020</button>
-    </div>
-
-    <div class="search-box">
-        <input type="text" id="searchInput" onkeyup="search()" placeholder="सदस्य का नाम खोजें...">
     </div>
 
     <div class="list-card" id="listContent"></div>
@@ -91,65 +98,44 @@
 
 <script>
     let currentYear = '2026';
+    let isAdmin = false;
     const target = 2500;
-    
-    // Yearly Expenses
-    const expenses = { "2026": 0, "2025": 0, "2024": 0, "2023": 0, "2022": 0, "2021": 0, "2020": 0 };
+    const expenses = { "2026": 0, "2025": 0, "2024": 0, "2023": 0, "2022": 0 };
+    const members = { "2026": [{n:"APU DAS", j:500}, {n:"AJAY DAS", j:2500}], "2025": [], "2024":[], "2023":[], "2022":[] };
 
-    const members = {
-        "2026": [{n:"APU DAS", j:500}, {n:"AJAY DAS", j:2500}, {n:"SAMBHU DAS", j:1000}],
-        "2025": [{n:"APU DAS", j:2500}], "2024":[], "2023":[], "2022":[], "2021":[], "2020":[]
-    };
+    function openAdmin() {
+        let p = prompt("Password Dalein:");
+        if(p === "1234") {
+            isAdmin = true;
+            document.getElementById('expBox').style.display = 'block';
+            document.getElementById('lockBtn').innerHTML = "🔓 Admin Mode: Amit Das";
+        } else { alert("Maafi Chahta Hoon, Galat Password!"); }
+    }
 
     function render() {
-        document.getElementById('yrLabel').innerText = currentYear;
-        document.getElementById('yrLabel2').innerText = currentYear;
         document.getElementById('inputExp').value = expenses[currentYear];
-        
         const listDiv = document.getElementById('listContent');
         const data = members[currentYear] || [];
         listDiv.innerHTML = "";
-        
-        let yearlyJama = 0;
-        data.forEach((m, i) => {
-            yearlyJama += m.j;
-            let status = m.j >= target ? `<span style="color:#4ade80">PAID</span>` : `<span style="color:#f87171">DUE ₹${target-m.j}</span>`;
-            listDiv.innerHTML += `<div class="member-row"><div><b>${m.n}</b><br><small style="color:var(--text-dim)">जमा: ₹${m.j}</small></div><div style="font-size:12px; font-weight:800">${status}</div></div>`;
+        let yrJ = 0;
+        data.forEach(m => {
+            yrJ += m.j;
+            let s = m.j >= target ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">DUE</b>`;
+            listDiv.innerHTML += `<div class="member-row"><div><span>${m.n}</span><br><small style="color:#94a3b8">JAMA: ₹${m.j}</small></div>${s}</div>`;
         });
-
-        document.getElementById('yrJama').innerText = '₹' + yearlyJama;
+        document.getElementById('yrJama').innerText = '₹' + yrJ;
         document.getElementById('yrExp').innerText = '₹' + expenses[currentYear];
-
-        // Total Global Balance Calculation
-        let grandTotal = 0;
-        Object.keys(expenses).forEach(yr => {
-            let yrSum = 0;
-            (members[yr] || []).forEach(m => yrSum += m.j);
-            grandTotal += (yrSum - expenses[yr]);
+        
+        let totalB = 0;
+        Object.keys(expenses).forEach(y => {
+            let s = 0; (members[y] || []).forEach(m => s += m.j);
+            totalB += (s - expenses[y]);
         });
-        document.getElementById('grandTotal').innerText = '₹' + grandTotal.toLocaleString();
+        document.getElementById('grandTotal').innerText = '₹' + totalB.toLocaleString();
     }
 
-    function updateFinance() {
-        expenses[currentYear] = parseInt(document.getElementById('inputExp').value) || 0;
-        render();
-    }
-
-    function setYear(year, btn) {
-        currentYear = year;
-        document.querySelectorAll('.year-pill').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        render();
-    }
-
-    function search() {
-        let filter = document.getElementById("searchInput").value.toUpperCase();
-        let rows = document.getElementsByClassName("member-row");
-        for (let row of rows) {
-            row.style.display = row.innerText.toUpperCase().includes(filter) ? "flex" : "none";
-        }
-    }
-
+    function saveExp() { if(isAdmin) { expenses[currentYear] = parseInt(document.getElementById('inputExp').value) || 0; render(); } }
+    function setYear(y, b) { currentYear = y; document.querySelectorAll('.year-pill').forEach(x => x.classList.remove('active')); b.classList.add('active'); render(); }
     render();
 </script>
 </body>
