@@ -26,9 +26,18 @@
         .nav-btn.active { background: var(--neon); color: #000; border-color: var(--neon); box-shadow: 0 0 10px var(--neon); }
 
         .balance-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; margin-bottom: 15px; }
+        
         .year-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
         .year-pill { background: var(--card); border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 10px; cursor: pointer; color: #94a3b8; white-space: nowrap; font-size: 12px; }
         .year-pill.active { border-color: #fff; color: #fff; }
+
+        /* 🔍 Search Box Styling */
+        .search-container { margin-bottom: 20px; }
+        .search-container input { 
+            width: 100%; padding: 14px 18px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08); color: #fff; outline: none; box-sizing: border-box; font-size: 15px;
+        }
+        .search-container input:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
 
         .list-card { background: var(--card); border-radius: 25px; padding: 5px; margin-bottom: 30px; }
         .row-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -49,7 +58,7 @@
     <div class="container">
         <div class="social-links">
             <a href="https://facebook.com/AapkaPageLink" target="_blank" class="s-btn fb-btn">🔵 FB PAGE</a>
-            <a href="https://maps.google.com/?q=Narayanpur" target="_blank" class="s-btn map-btn">📍 LOCATION</a>
+            <a href="http://maps.google.com" target="_blank" class="s-btn map-btn">📍 LOCATION</a>
         </div>
     </div>
 </header>
@@ -78,6 +87,10 @@
         <button class="year-pill" onclick="setYear('2020', this)">2020</button>
     </div>
 
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="filterNames()" placeholder="🔍 सदस्य या सामान खोजें...">
+    </div>
+
     <div class="list-card" id="mainList"></div>
 
     <div class="footer">
@@ -90,6 +103,9 @@
     let currentTab = 'yagya';
     let currentYear = '2026';
     const members = ["APU DAS", "AJAY DAS", "SASTY DAS", "LULA DAS", "SAMBHU DAS", "PRAKASH DAS", "DILIP PAUL", "DIPU PAUL", "SUKTU DAS", "LALTU DAS", "SANJIT DAS", "AJIT DAS", "TAPAN DAS", "SUMAN RAY", "SUDHIR RAY", "PAPPU THAKOOR", "PREAM THAKOOR", "SOPAN DAS", "SANATAN DAS", "TINKU DAS", "GOPAL DAS", "RAM DAS", "DEBU DAS", "HARANU DAS", "UTTAM DAS", "GOUTAM DAS", "SHIVANI DAS", "SITA DAS", "PUTUL DAS", "RINKU DAS", "RATAN DAS", "MANIK DAS", "RATAN GHOSH", "LAXMAN DAS", "DILIP DAS", "KILIP DAS", "CHILKA DAS", "LALIT DAS", "PINTU DAS"];
+
+    // Sample data for logic testing
+    const jamaData = { "APU DAS": 500, "AJAY DAS": 2500 };
 
     function switchTab(t) {
         currentTab = t;
@@ -104,6 +120,16 @@
         btn.classList.add('active');
         document.getElementById('activeYearLabel').innerText = y;
         render();
+    }
+
+    // 🔍 Search Function
+    function filterNames() {
+        let input = document.getElementById('searchInput').value.toUpperCase();
+        let rows = document.getElementsByClassName('row-item');
+        for (let row of rows) {
+            let text = row.innerText.toUpperCase();
+            row.style.display = text.includes(input) ? "flex" : "none";
+        }
     }
 
     function render() {
@@ -123,15 +149,17 @@
 
         if (currentTab === 'kharcha') {
             document.getElementById('sumLabel').innerText = "KUL KHARCHA ("+currentYear+")";
-            listDiv.innerHTML = `<div class="row-item">No records for this year yet.</div>`;
+            listDiv.innerHTML = `<div class="row-item">Abhi koi kharcha add nahi hai.</div>`;
         } else {
             document.getElementById('sumLabel').innerText = "KUL JAMA COLLECTION ("+currentYear+")";
             members.forEach((name, i) => {
-                let j = 0; // Yahan data add karein
+                let j = jamaData[name] || 0; 
+                total += j;
                 let status = (j >= target) ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">DUE ₹${target-j}</b>`;
                 listDiv.innerHTML += `<div class="row-item"><div>${i+1}. <b>${name}</b><br><small>JAMA: ₹${j}</small></div><div>${status}</div></div>`;
             });
         }
+        document.getElementById('totalVal').innerText = '₹' + total.toLocaleString();
     }
 
     render();
