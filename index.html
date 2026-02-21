@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Narayanpur Puja Records</title>
+    <title>Narayanpur Puja Committee</title>
     <style>
         body { font-family: sans-serif; background-color: #fffde7; margin: 0; padding: 10px; text-align: center; }
         .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; border: 2px solid #ff9800; }
         .photo-frame { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #ff9800; margin: 0 auto 10px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; }
         
-        /* Saal badalne wale Buttons */
-        .year-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin-bottom: 15px; }
-        .year-btn { padding: 8px 15px; border: none; border-radius: 20px; background: #ffe0b2; color: #e65100; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .year-btn.active { background: #ff9800; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .selector-group { margin-bottom: 15px; }
+        select { padding: 10px; border-radius: 10px; border: 2px solid #ff9800; font-weight: bold; width: 80%; margin-bottom: 10px; }
 
-        .stats { display: flex; justify-content: space-around; font-weight: bold; font-size: 14px; border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px; }
+        .year-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin-bottom: 15px; }
+        .year-btn { padding: 8px 15px; border: none; border-radius: 20px; background: #ffe0b2; color: #e65100; font-weight: bold; cursor: pointer; }
+        .year-btn.active { background: #ff9800; color: white; }
+
+        .stats { display: flex; justify-content: space-around; font-weight: bold; font-size: 14px; border-top: 1px solid #eee; padding-top: 10px; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ffb74d; border-radius: 25px; outline: none; box-sizing: border-box; }
         
         table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
@@ -23,26 +25,33 @@
         
         .paid-tag { color: #2e7d32; font-weight: bold; }
         .due-tag { color: #d32f2f; font-weight: bold; }
-        .footer { margin-top: 20px; padding: 10px; font-size: 13px; color: #e65100; font-weight: bold; }
+        .footer { margin-top: 20px; padding: 10px; font-size: 13px; color: #e65100; font-weight: bold; border-top: 1px solid #ccc; }
     </style>
 </head>
 <body>
 
     <div class="card">
         <div class="photo-frame">🛕</div>
-        <h1 id="yearTitle" style="font-size: 18px; color: #e65100; margin: 5px 0;">यज्ञ पूजा विवरण 2026</h1>
+        <h1>🙏 उत्तर नारायणपुर पूजा कमेटी 🙏</h1>
         
-        <div class="year-container">
-            <button class="year-btn active" onclick="changeYear('2026')">2026</button>
-            <button class="year-btn" onclick="changeYear('2025')">2025</button>
-            <button class="year-btn" onclick="changeYear('2024')">2024</button>
-            <button class="year-btn" onclick="changeYear('2023')">2023</button>
-            <button class="year-btn" onclick="changeYear('2022')">2022</button>
+        <div class="selector-group">
+            <select id="pujaType" onchange="updateView()">
+                <option value="yagya">यज्ञ पूजा (Yagya Puja)</option>
+                <option value="burimaa">बुरी माँ पूजा (Burimaa Puja)</option>
+            </select>
+
+            <div class="year-container" id="yearBtns">
+                <button class="year-btn active" onclick="setYear('2026')">2026</button>
+                <button class="year-btn" onclick="setYear('2025')">2025</button>
+                <button class="year-btn" onclick="setYear('2024')">2024</button>
+                <button class="year-btn" onclick="setYear('2023')">2023</button>
+                <button class="year-btn" onclick="setYear('2022')">2022</button>
+            </div>
         </div>
 
         <div class="stats">
-            <div style="color: #2e7d32;">जमा: ₹<span id="totalJama">0</span></div>
-            <div style="color: #d32f2f;">बाकी: ₹<span id="totalDue">0</span></div>
+            <div style="color: #2e7d32;">कुल जमा: ₹<span id="totalJama">0</span></div>
+            <div style="color: #d32f2f;">कुल बाकी: ₹<span id="totalDue">0</span></div>
         </div>
     </div>
 
@@ -50,7 +59,7 @@
 
     <table id="pujaTable">
         <thead>
-            <tr><th>Naam</th><th>Jama</th><th>Status</th></tr>
+            <tr><th>S.N. Naam</th><th>Jama</th><th>Status</th></tr>
         </thead>
         <tbody id="tableBody"></tbody>
     </table>
@@ -58,31 +67,36 @@
     <div class="footer">🧡 Created by Amit Das 🧡</div>
 
     <script>
+        let currentYear = '2026';
         const target = 2500;
-        
-        // Yahan har saal ka data alag-alag rahega
+
         const allData = {
-            "2026": [
-                { n: "APU DAS", j: 0 }, { n: "AJAY DAS", j: 0 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
-                { n: "SAMBHU DAS", j: 0 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 0 },
-                { n: "SUKTU DAS", j: 0 }, { n: "LALTU DAS", j: 0 }, { n: "SANJIT DAS", j: 0 }, { n: "AJIT DAS", j: 0 },
-                { n: "TAPAN DAS", j: 0 }, { n: "SUMAN RAY", j: 0 }, { n: "SUDHIR RAY", j: 0 }, { n: "PAPPU THAKOOR", j: 0 },
-                { n: "PREAM THAKOOR", j: 0 }, { n: "SOPAN DAS", j: 0 }, { n: "SANATAN DAS", j: 0 }, { n: "TINKU DAS", j: 0 },
-                { n: "GOPAL DAS", j: 0 }, { n: "RAM DAS", j: 0 }, { n: "DEBU DAS", j: 0 }, { n: "HARANU DAS", j: 0 },
-                { n: "UTTAM DAS", j: 0 }, { n: "GOUTAM DAS", j: 0 }, { n: "SHIVANI DAS", j: 0 }, { n: "SITA DAS", j: 0 },
-                { n: "PUTUL DAS", j: 0 }, { n: "RINKU DAS", j: 0 }, { n: "RATAN DAS", j: 0 }, { n: "MANIK DAS", j: 0 },
-                { n: "RATAN GHOSH", j: 0 }, { n: "LAXMAN DAS", j: 0 }, { n: "DILIP DAS", j: 0 }, { n: "KILIP DAS", j: 0 },
-                { n: "CHILKA DAS", j: 0 }, { n: "LALIT DAS", j: 0 }
-            ],
-            "2025": [{ n: "Purana Data Bhariye", j: 2500 }],
-            "2024": [{ n: "Purana Data Bhariye", j: 2500 }],
-            "2023": [{ n: "Purana Data Bhariye", j: 2500 }],
-            "2022": [{ n: "Purana Data Bhariye", j: 2500 }]
+            "yagya": {
+                "2026": [
+                    { n: "APU DAS", j: 0 }, { n: "AJAY DAS", j: 0 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
+                    { n: "SAMBHU DAS", j: 0 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 0 },
+                    { n: "SUKTU DAS", j: 0 }, { n: "LALTU DAS", j: 0 }, { n: "SANJIT DAS", j: 0 }, { n: "AJIT DAS", j: 0 },
+                    { n: "TAPAN DAS", j: 0 }, { n: "SUMAN RAY", j: 0 }, { n: "SUDHIR RAY", j: 0 }, { n: "PAPPU THAKOOR", j: 0 },
+                    { n: "PREAM THAKOOR", j: 0 }, { n: "SOPAN DAS", j: 0 }, { n: "SANATAN DAS", j: 0 }, { n: "TINKU DAS", j: 0 },
+                    { n: "GOPAL DAS", j: 0 }, { n: "RAM DAS", j: 0 }, { n: "DEBU DAS", j: 0 }, { n: "HARANU DAS", j: 0 },
+                    { n: "UTTAM DAS", j: 0 }, { n: "GOUTAM DAS", j: 0 }, { n: "SHIVANI DAS", j: 0 }, { n: "SITA DAS", j: 0 },
+                    { n: "PUTUL DAS", j: 0 }, { n: "RINKU DAS", j: 0 }, { n: "RATAN DAS", j: 0 }, { n: "MANIK DAS", j: 0 },
+                    { n: "RATAN GHOSH", j: 0 }, { n: "LAXMAN DAS", j: 0 }, { n: "DILIP DAS", j: 0 }, { n: "KILIP DAS", j: 0 },
+                    { n: "CHILKA DAS", j: 0 }, { n: "LALIT DAS", j: 0 }
+                ],
+                "2025": [], "2024": [], "2023": [], "2022": []
+            },
+            "burimaa": {
+                "2026": [{ n: "BURIMAA SAMPLE NAAM", j: 0 }],
+                "2025": [], "2024": [], "2023": [], "2022": []
+            }
         };
 
-        function renderTable(year) {
+        function updateView() {
+            const type = document.getElementById('pujaType').value;
             const tableBody = document.getElementById('tableBody');
-            const data = allData[year];
+            const data = allData[type][currentYear] || [];
+            
             tableBody.innerHTML = "";
             let totalJ = 0, totalD = 0;
 
@@ -95,13 +109,13 @@
 
             document.getElementById('totalJama').innerText = totalJ;
             document.getElementById('totalDue').innerText = totalD;
-            document.getElementById('yearTitle').innerText = "यज्ञ पूजा विवरण " + year;
         }
 
-        function changeYear(year) {
+        function setYear(year) {
+            currentYear = year;
             document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            renderTable(year);
+            updateView();
         }
 
         function search() {
@@ -112,8 +126,7 @@
             }
         }
 
-        // Shuruat mein 2026 dikhao
-        renderTable('2026');
+        updateView();
     </script>
 </body>
 </html>
