@@ -3,114 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Narayanpur Committee Portal</title>
+    <title>Narayanpur Committee Modern Portal</title>
     <style>
-        :root { --primary: #fb8c00; --secondary: #ef6c00; --bg: #f8fafb; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 30px; }
-        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 25px 15px 50px; border-radius: 0 0 30px 30px; text-align: center; }
-        .container { padding: 0 15px; max-width: 600px; margin: -30px auto 0; }
+        :root { 
+            --accent: #ff6d00; 
+            --gradient: linear-gradient(135deg, #ff9100, #ff6d00);
+            --glass: rgba(255, 255, 255, 0.95);
+            --bg: #f0f2f5;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: #1a1a1b; line-height: 1.6; }
         
-        /* Dashboard Stats */
-        .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        .stat-card { background: white; padding: 12px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; }
+        /* Modern Header */
+        header { background: var(--gradient); padding: 40px 20px 80px; text-align: center; color: white; border-radius: 0 0 40px 40px; }
+        .logo-text { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
         
-        .admin-config { background: #fff3e0; padding: 10px; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; font-weight: bold; color: #e65100; border: 1px dashed #ff9800; }
-        .admin-config input { width: 70px; padding: 5px; border-radius: 5px; border: 1px solid #ff9800; text-align: center; font-weight: bold; }
+        .container { padding: 0 16px; max-width: 500px; margin: -50px auto 0; }
 
-        .year-scroller { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0 15px; scrollbar-width: none; }
-        .year-pill { background: white; border: 1px solid #ddd; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; color: #666; }
-        .year-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
+        /* Floating Stats Card */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: var(--glass); padding: 20px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; border: 1px solid rgba(255,255,255,0.3); }
+        .stat-box label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #70757a; font-weight: 700; }
+        .stat-box .val { font-size: 20px; font-weight: 800; margin-top: 5px; color: #1a1a1b; }
 
-        .search-container { background: white; border-radius: 15px; padding: 12px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .search-container input { border: none; width: 100%; outline: none; font-size: 16px; }
+        /* Modern Inputs */
+        .admin-panel { background: #fff; padding: 15px; border-radius: 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .admin-panel input { border: 2px solid #eee; padding: 8px 12px; border-radius: 12px; width: 100px; font-weight: 700; text-align: center; color: var(--accent); outline: none; transition: 0.3s; }
+        .admin-panel input:focus { border-color: var(--accent); }
 
-        .list-container { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        table { width: 100%; border-collapse: collapse; }
-        td, th { padding: 12px; border-bottom: 1px solid #f5f5f5; font-size: 13px; text-align: left; }
+        /* Year Scroller */
+        .scroll-wrapper { display: flex; gap: 10px; overflow-x: auto; padding: 5px 0 20px; scrollbar-width: none; }
+        .year-btn { background: #fff; border: none; padding: 10px 24px; border-radius: 16px; font-weight: 600; color: #5f6368; box-shadow: 0 4px 10px rgba(0,0,0,0.04); cursor: pointer; transition: 0.3s; }
+        .year-btn.active { background: var(--accent); color: #fff; box-shadow: 0 8px 15px rgba(255,109,0,0.3); }
+
+        /* Search Bar */
+        .search-box { position: relative; margin-bottom: 20px; }
+        .search-box input { width: 100%; padding: 16px 20px; border-radius: 20px; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05); box-sizing: border-box; font-size: 16px; outline: none; }
+
+        /* Modern List */
+        .list-card { background: #fff; border-radius: 28px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+        .member-row { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid #f1f3f4; }
+        .member-row:last-child { border-bottom: none; }
+        .m-info { display: flex; flex-direction: column; }
+        .m-name { font-weight: 700; font-size: 15px; color: #202124; }
+        .m-jama { font-size: 13px; color: #70757a; margin-top: 2px; }
         
-        /* Enhanced Status Badge */
-        .status { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: inline-block; min-width: 80px; text-align: center; }
-        .paid { background: #e8f5e9; color: #2e7d32; }
-        .due { background: #ffebee; color: #c62828; }
-        
-        .footer { text-align: center; padding: 20px; color: #aaa; font-size: 12px; }
+        /* Status Badges */
+        .badge { padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .paid-bg { background: #e6f4ea; color: #137333; }
+        .due-bg { background: #fce8e6; color: #c5221f; }
+        .due-amt { display: block; font-size: 10px; margin-top: 2px; }
+
+        .footer { text-align: center; padding: 40px 20px; color: #bdc1c6; font-size: 11px; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size: 20px; font-weight: 800;">🛕 नारायणपुर पूजा कमेटी 
-    villege-narayanpur po+ps-Abadpur barsoi katihar</div>
+    <div class="logo-text">नारायणपुर पूजा कमेटी
+    नारायणपुर,आबादपुर,बरसोई,कटिहार </div>
+    <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Modern Admin Portal 2.0</div>
 </header>
 
 <div class="container">
-    <div class="stats-row">
-        <div class="stat-card"><small>कुल जमा</small><div id="totalJama" style="color:green; font-weight:bold; font-size:18px;">₹0</div></div>
-        <div class="stat-card"><small>कुल बाकी</small><div id="totalDue" style="color:red; font-weight:bold; font-size:18px;">₹0</div></div>
+    <div class="stats-grid">
+        <div class="stat-box">
+            <label>कुल जमा</label>
+            <div class="val" id="totalJama" style="color: #137333;">₹0</div>
+        </div>
+        <div class="stat-box">
+            <label>कुल बाकी</label>
+            <div class="val" id="totalDue" style="color: #c5221f;">₹0</div>
+        </div>
     </div>
 
-    <div class="admin-config">
-        🎯 चंदा राशि (Target): ₹ <input type="number" id="chandaTarget" value="2500" oninput="render()">
+    <div class="admin-panel">
+        <span style="font-size: 14px; font-weight: 600;">🎯 चंदा लक्ष्य (Target)</span>
+        <input type="number" id="chandaTarget" value="2500" oninput="render()">
     </div>
 
-    <div class="year-scroller">
-        <div class="year-pill active">2026</div>
-        <div class="year-pill">2025</div>
-        <div class="year-pill">2024</div>
+    <div class="scroll-wrapper">
+        <button class="year-btn active">2026</button>
+        <button class="year-btn">2025</button>
+        <button class="year-btn">2024</button>
+        <button class="year-btn">2023</button>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 सदस्य का नाम खोजें...">
+    <div class="search-box">
+        <input type="text" id="searchInput" onkeyup="search()" placeholder="सदस्य का नाम खोजें...">
     </div>
 
-    <div class="list-container">
-        <table>
-            <thead><tr><th>सदस्य</th><th>जमा</th><th>STATUS (BAAKI)</th></tr></thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
+    <div class="list-card" id="tableBody">
+        </div>
 
-    <div class="footer">ADMIN: <b>AMIT DAS</b></div>
+    <div class="footer">
+        POWERED BY <b>AMIT DAS</b>
+    </div>
 </div>
 
 <script>
-    const allData = [
-        { n: "APU DAS", j: 500 }, { n: "AJAY DAS", j: 0 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
-        { n: "SAMBHU DAS", j: 2500 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 0 },
-        { n: "SUKTU DAS", j: 0 }, { n: "LALTU DAS", j: 0 }, { n: "SANJIT DAS", j: 200 }, { n: "AJIT DAS", j: 0 }
+    const members = [
+        { n: "APU DAS", j: 500 }, { n: "AJAY DAS", j: 0 }, 
+        { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
+        { n: "SAMBHU DAS", j: 2500 }, { n: "PRAKASH DAS", j: 1200 }, 
+        { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 2500 },
+        { n: "SUKTU DAS", j: 0 }, { n: "LALTU DAS", j: 500 }, 
+        { n: "SANJIT DAS", j: 0 }, { n: "AJIT DAS", j: 0 }
     ];
 
     function render() {
         const target = parseInt(document.getElementById('chandaTarget').value) || 0;
-        const tableBody = document.getElementById('tableBody');
-        tableBody.innerHTML = "";
+        const container = document.getElementById('tableBody');
+        container.innerHTML = "";
         let tJ = 0, tD = 0;
 
-        allData.forEach((m, index) => {
+        members.forEach((m, index) => {
             let baaki = target - m.j;
             if(baaki < 0) baaki = 0;
             tJ += m.j; tD += baaki;
             
-            // Status Logic: Agar poora jama hai toh PAID, warna DUE (₹Baaki)
-            let statusHTML = m.j >= target 
-                ? `<span class="status paid">PAID</span>` 
-                : `<span class="status due">DUE (₹${baaki})</span>`;
+            let isPaid = m.j >= target;
+            let statusBadge = isPaid 
+                ? `<div class="badge paid-bg">PAID</div>` 
+                : `<div class="badge due-bg">DUE<span class="due-amt">₹${baaki} बाकी</span></div>`;
 
-            tableBody.innerHTML += `<tr>
-                <td>${index + 1}. <b>${m.n}</b></td>
-                <td>₹${m.j}</td>
-                <td>${statusHTML}</td>
-            </tr>`;
+            container.innerHTML += `
+                <div class="member-row">
+                    <div class="m-info">
+                        <span class="m-name">${index + 1}. ${m.n}</span>
+                        <span class="m-jama">जमा: ₹${m.j}</span>
+                    </div>
+                    <div>${statusBadge}</div>
+                </div>`;
         });
-        document.getElementById('totalJama').innerText = '₹' + tJ;
-        document.getElementById('totalDue').innerText = '₹' + tD;
+        
+        document.getElementById('totalJama').innerText = '₹' + tJ.toLocaleString();
+        document.getElementById('totalDue').innerText = '₹' + tD.toLocaleString();
     }
 
     function search() {
         let filter = document.getElementById("searchInput").value.toUpperCase();
-        let tr = document.getElementById('tableBody').getElementsByTagName("tr");
-        for (let i = 0; i < tr.length; i++) {
-            tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        let rows = document.getElementsByClassName("member-row");
+        for (let row of rows) {
+            row.style.display = row.innerText.toUpperCase().includes(filter) ? "flex" : "none";
         }
     }
     render();
