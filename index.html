@@ -8,41 +8,23 @@
     <style>
         :root { --neon: #00f2ff; --bg: #070b14; --card: rgba(255, 255, 255, 0.05); --gold: #ffd700; --fb: #1877F2; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 20px; }
-        
         header { padding: 40px 20px; text-align: center; background: radial-gradient(circle at center, #1a233a 0%, #070b14 100%); border-bottom: 1px solid rgba(0,242,255,0.2); }
         .main-title { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 900; text-shadow: 0 0 10px var(--neon); text-transform: uppercase; letter-spacing: 2px; }
-
         .container { padding: 0 16px; max-width: 480px; margin: 0 auto; }
-
-        /* Social Links */
         .social-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .s-btn { padding: 12px; border-radius: 12px; border: none; font-weight: 800; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #fff; }
-
-        /* Navigation */
         .nav-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin: 20px 0; }
         .nav-btn { border: 1px solid rgba(255,255,255,0.1); background: var(--card); color: #94a3b8; padding: 10px 2px; cursor: pointer; border-radius: 10px; font-weight: 700; font-size: 11px; }
         .nav-btn.active { background: var(--neon); color: #000; box-shadow: 0 0 10px var(--neon); }
-
         .balance-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; margin-bottom: 15px; }
-        
-        /* ⏳ Timer Styling */
         .timer-box { background: rgba(0, 242, 255, 0.1); border-radius: 12px; padding: 12px; margin-bottom: 15px; border: 1px dashed var(--neon); }
-
+        .search-container { margin: 10px 0 20px 0; position: sticky; top: 10px; z-index: 100; }
+        .search-container input { width: 100%; padding: 15px; border-radius: 15px; border: 2px solid var(--neon); background: #0f172a; color: #fff; outline: none; box-sizing: border-box; font-size: 16px; }
         .year-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
         .year-pill { background: var(--card); border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 10px; cursor: pointer; color: #94a3b8; white-space: nowrap; font-size: 12px; }
         .year-pill.active { border-color: #fff; color: #fff; }
-
-        /* 🔍 Search Box */
-        .search-container { margin: 10px 0 20px 0; position: sticky; top: 10px; z-index: 100; }
-        .search-container input { 
-            width: 100%; padding: 15px; border-radius: 15px; border: 2px solid var(--neon);
-            background: #0f172a; color: #fff; outline: none; box-sizing: border-box; font-size: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
         .list-card { background: var(--card); border-radius: 25px; padding: 5px; margin-bottom: 30px; }
         .row-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
         .footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 20px; }
         .m-name { font-family: 'Dancing Script', cursive; font-size: 26px; color: var(--gold); display: block; margin-top: 5px; }
     </style>
@@ -51,19 +33,14 @@
 
 <header>
     <div class="main-title">NARAYANPUR <br> PUJA COMMITTEE</div>
-    <div class="container">
-        <div class="social-links">
-            <a href="https://www.facebook.com/profile.php?id=61551497346231&mibextid=wwXIfr" target="_blank" class="s-btn" style="background: var(--fb);">🔵 FB PAGE</a>
-            <a href="https://maps.app.goo.gl/PXgD9yDtiyCMKmn87?g_st=ic" target="_blank" class="s-btn" style="background: #34A853;">📍 LOCATION</a>
-        </div>
-    </div>
+    <div class="container"><div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61551497346231" target="_blank" class="s-btn" style="background: var(--fb);">🔵 FB PAGE</a>
+        <a href="https://maps.app.goo.gl/PXgD9yDtiyCMKmn87?g_st=ic" target="_blank" class="s-btn" style="background: #34A853;">📍 LOCATION</a>
+    </div></div>
 </header>
 
 <div class="container">
-    <div class="search-container">
-        <input type="text" id="searchInput" oninput="runSearch()" placeholder="🔍 सदस्य का नाम यहाँ लिखें...">
-    </div>
-
+    <div class="search-container"><input type="text" id="searchInput" oninput="runSearch()" placeholder="🔍 नाम यहाँ लिखें..."></div>
     <div class="nav-grid">
         <button id="btn-yagya" class="nav-btn active" onclick="switchTab('yagya')">यज्ञ</button>
         <button id="btn-burimaa" class="nav-btn" onclick="switchTab('burimaa')">बुरी माँ</button>
@@ -72,40 +49,41 @@
     </div>
 
     <div class="balance-card">
-        <div class="timer-box">
-            <small style="color: var(--neon); font-weight: 800; letter-spacing: 1px;">अगला किर्तन Date: 17 JUNE 2026</small>
-            <div id="countdown" style="font-size: 18px; font-weight: 800; color: var(--gold); margin-top: 5px; font-family: monospace;">⏳ Loading...</div>
-        </div>
-
+        <div class="timer-box"><small style="color: var(--neon); font-weight: 800;">AGLA YAGYA: 17 JUNE 2026</small><div id="countdown" style="font-size: 18px; color: var(--gold); font-family: monospace;">⏳ Loading...</div></div>
         <small id="sumLabel" style="color:#94a3b8">KUL JAMA</small>
-        <div id="totalVal" style="font-size: 30px; font-weight: 800; margin: 5px 0; color: var(--neon);">₹0</div>
+        <div id="totalVal" style="font-size: 30px; font-weight: 800; color: var(--neon);">₹0</div>
         <div style="font-size: 11px;">YEAR: <span id="activeYearLabel" style="color:var(--gold)">2026</span></div>
     </div>
 
     <div class="year-scroll">
         <button class="year-pill active" onclick="setYear('2026', this)">2026</button>
         <button class="year-pill" onclick="setYear('2025', this)">2025</button>
-        <button class="year-pill" onclick="setYear('2024', this)">2024</button>
-        <button class="year-pill" onclick="setYear('2023', this)">2023</button>
-        <button class="year-pill" onclick="setYear('2022', this)">2022</button>
-        <button class="year-pill" onclick="setYear('2021', this)">2021</button>
-        <button class="year-pill" onclick="setYear('2020', this)">2020</button>
     </div>
 
     <div class="list-card" id="mainList"></div>
-
-    <div class="footer">
-        <span style="font-size: 10px; color: #64748b; letter-spacing: 2px;">MAINTAINED BY</span>
-        <span class="m-name">Amit Das</span>
-    </div>
+    <div class="footer">MAINTAINED BY <span class="m-name">Amit Das</span></div>
 </div>
 
 <script>
     let currentTab = 'yagya';
     let currentYear = '2026';
-    const members = ["APPU DAS", "AJAY DAS", "SASTY DAS", "LULA DAS", "SHAMBHU DAS", "PRAKASH DAS", "DILIP PAUL", "DIPU PAUL", "SUKTU DAS", "LALTU DAS", "SANJIT DAS", "AJIT DAS", "TAPAN DAS", "SUMAN RAY", "SUDHIR RAY", "PAPPU THAKOOR", "PREAM THAKOOR", "SOPAN DAS", "SANATAN DAS", "TINKU DAS", "GOPAL DAS", "RAM DAS", "DEBU DAS", "HARANU DAS", "UTTAM DAS", "GOUTAM DAS", "SHIVANI DAS", "SITA DAS", "PUTUL DAS", "RINKU DAS", "RATAN DAS", "MANIK DAS", "RATAN GHOSH", "LAXMAN DAS", "DILIP DAS", "KILIP DAS", "CHILKA DAS", "LALIT DAS", "CHAAYA RANI", "JIBAN DAS", "DHARUA DAS", "ANIL DAS", "BARUN DAS", "TAPAN DAS","DAMRU DAS", "PINTU DAS", "DOLAN DAS", "AMAL PANDEY", " BASU PANDEY", "DHALO DAS", "GHUKRA DAS", "TIYA DAS", "SANATAN DAS", "DIPAK DAS", "JATIN DAS", "RANJIT DAS"," BIKASH DAS", "RAJU DAS", "UTTAM DAS(KACHALU DAS)", "SUSIL DAS", "SOPAN DAS", "GOBIN DAS", "GHURANU DAS", "HARANU DAS2", "MUKUL DAS", "KUSHIL DAS", "BINAI DAS"];
 
-    // ⏳ Timer Logic
+    const members = ["APU DAS", "AJAY DAS", "SASTY DAS", "LULA DAS", "SHAMBHU DAS", "PRAKASH DAS", "DILIP PAUL", "DIPU PAUL", "SUKTU DAS", "LALTU DAS", "SANJIT DAS", "AJIT DAS", "TAPAN DAS", "SUMAN RAY", "SUDHIR RAY", "PAPPU THAKOOR", "PREAM THAKOOR", "SOPAN DAS", "SANATAN DAS", "TINKU DAS", "GOPAL DAS", "RAM DAS", "DEBU DAS", "HARANU DAS", "UTTAM DAS", "GOUTAM DAS", "SHIVANI DAS", "SITA DAS", "PUTUL DAS", "RINKU DAS", "RATAN DAS", "MANIK DAS", "RATAN GHOSH", "LAXMAN DAS", "DILIP DAS", "KILIP DAS", "CHILKA DAS", "LALIT DAS", "CHAAYA RANI", "JIBAN DAS", "DHARUA DAS", "ANIL DAS", "BARUN DAS", "TAPAN DAS","DAMRU DAS", "PINTU DAS", "DOLAN DAS", "AMAL PANDEY", " BASU PANDEY", "DHALO DAS", "GHUKRA DAS", "TIYA DAS", "SANATAN DAS", "DIPAK DAS", "JATIN DAS", "RANJIT DAS"," BIKASH DAS", "RAJU DAS", "UTTAM DAS(KACHALU DAS)", "SUSIL DAS", "SOPAN DAS", "GOBIN DAS", "GHURANU DAS", "HARANU DAS2", "MUKUL DAS", "KUSHIL DAS", "BINAI DAS"];
+
+    // 💰 Yahan apna data bharein
+    const jamaData = {
+        "2025": {
+            "APU DAS": 2500,
+            "AJAY DAS": 2500,
+            "SASTY DAS": 500,
+            "LULA DAS": 2500
+            // Naye naam aise jodein: "NAAM": PAISA,
+        },
+        "2026": {
+            "APU DAS": 0
+        }
+    };
+
     function startTimer() {
         const target = new Date("June 17, 2026 00:00:00").getTime();
         setInterval(() => {
@@ -115,22 +93,16 @@
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            if (diff < 0) {
-                document.getElementById("countdown").innerHTML = "🎉 YAGYA SHURU HO GAYA!";
-            } else {
-                document.getElementById("countdown").innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
-            }
+            document.getElementById("countdown").innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
         }, 1000);
     }
 
-    // 🔍 Search Logic
     function runSearch() {
         let input = document.getElementById('searchInput').value.toUpperCase();
         let rows = document.getElementsByClassName('row-item');
         for (let row of rows) {
-            let nameContent = row.getElementsByTagName('b')[0].innerText.toUpperCase();
-            row.style.display = nameContent.includes(input) ? "flex" : "none";
+            let name = row.getElementsByTagName('b')[0].innerText.toUpperCase();
+            row.style.display = name.includes(input) ? "flex" : "none";
         }
     }
 
@@ -155,26 +127,18 @@
         listDiv.innerHTML = "";
         let total = 0;
 
-        if (currentTab === 'gallery') {
-            document.getElementById('sumLabel').innerText = "GALLERY";
-            listDiv.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8;">Photos available on Facebook Page.</div>`;
+        if (currentTab === 'gallery' || currentTab === 'kharcha') {
+            listDiv.innerHTML = `<div style="padding:20px; text-align:center;">No records yet.</div>`;
             return;
         }
 
-        if (currentTab === 'kharcha') {
-            document.getElementById('sumLabel').innerText = "TOTAL KHARCHA";
-            listDiv.innerHTML = `<div class="row-item">No records for ${currentYear}.</div>`;
-        } else {
-            document.getElementById('sumLabel').innerText = "TOTAL JAMA";
-            members.forEach((name, i) => {
-                let j = 0; 
-                let status = (j >= target) ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">DUE ₹${target-j}</b>`;
-                listDiv.innerHTML += `<div class="row-item">
-                    <div>${i+1}. <b>${name}</b><br><small style="color:#94a3b8">JAMA: ₹${j}</small></div>
-                    <div>${status}</div>
-                </div>`;
-            });
-        }
+        members.forEach((name, i) => {
+            let j = (jamaData[currentYear] && jamaData[currentYear][name]) ? jamaData[currentYear][name] : 0;
+            total += j;
+            let status = (j >= target) ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">DUE ₹${target-j}</b>`;
+            listDiv.innerHTML += `<div class="row-item"><div>${i+1}. <b>${name}</b><br><small>JAMA: ₹${j}</small></div><div>${status}</div></div>`;
+        });
+        document.getElementById('totalVal').innerText = '₹' + total.toLocaleString();
         runSearch();
     }
 
