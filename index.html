@@ -4,169 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Narayanpur Puja Committee</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;800&family=Cinzel:wght@700&family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ff8000; --bg-dark: #070b14; --gold: #ffd700; --neon: #00f2ff; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-dark); margin: 0; color: #fff; min-height: 100vh; }
+        :root { --neon: #00f2ff; --bg: #070b14; --card: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 50px; }
         
-        /* ✨ Neon Title Section */
-        .neon-header { 
-            padding: 50px 20px 30px; text-align: center; 
-            background: radial-gradient(circle at center, #1a233a 0%, #070b14 100%);
-        }
-        
+        /* 🎇 Neon Header */
+        header { padding: 45px 20px; text-align: center; background: radial-gradient(circle at center, #1a233a 0%, #070b14 100%); }
         .main-title { 
-            font-family: 'Cinzel', serif; 
-            font-size: 32px; 
-            font-weight: 900;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            line-height: 1.2;
-            text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon), 0 0 40px var(--neon);
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        /* ✨ Subtitle */
-        .sub-title {
-            font-size: 14px;
-            color: var(--neon);
-            letter-spacing: 5px;
-            font-weight: 600;
-            opacity: 0.8;
+            font-family: 'Cinzel', serif; font-size: 28px; font-weight: 900; color: #fff;
+            text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon); text-transform: uppercase;
         }
 
         .container { padding: 0 16px; max-width: 480px; margin: 0 auto; }
 
-        /* Balance Card */
+        /* 📊 Dashboard */
         .balance-card { 
-            background: rgba(255, 255, 255, 0.05); border-radius: 30px; padding: 25px; 
-            border: 1px solid rgba(0, 242, 255, 0.2); backdrop-filter: blur(10px);
-            text-align: center; margin-top: 20px;
+            background: var(--card); border-radius: 25px; padding: 20px; 
+            border: 1px solid rgba(0, 242, 255, 0.2); text-align: center; margin-bottom: 20px;
         }
-        .grand-val { font-size: 38px; font-weight: 800; color: #fff; margin: 10px 0; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        .grand-val { font-size: 32px; font-weight: 800; margin: 5px 0; }
 
-        /* Admin Lock Section */
-        .admin-lock-area { margin: 25px 0; }
-        .lock-btn { 
-            width: 100%; padding: 14px; border-radius: 20px; border: 1px solid rgba(0,242,255,0.3);
-            background: rgba(0,242,255,0.05); color: var(--neon); font-weight: 800; cursor: pointer;
+        /* 🔍 Search Box (Wapas aa gaya) */
+        .search-container { margin-bottom: 20px; }
+        .search-container input { 
+            width: 100%; padding: 15px 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08); color: #fff; outline: none; box-sizing: border-box; font-size: 16px;
         }
-        .expense-input-box { 
-            display: none; background: rgba(239, 68, 68, 0.1); padding: 20px; 
-            border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.2); margin-top: 15px;
-        }
+        .search-container input:focus { border-color: var(--neon); }
 
-        .year-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; margin: 20px 0; }
-        .year-pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px 25px; border-radius: 18px; cursor: pointer; color: #94a3b8; font-weight: 700; white-space: nowrap; }
-        .year-pill.active { border-color: var(--neon); color: var(--neon); background: rgba(0,242,255,0.1); }
+        .year-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
+        .year-pill { background: var(--card); border: 1px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 12px; cursor: pointer; color: #94a3b8; white-space: nowrap; font-size: 14px; }
+        .year-pill.active { border-color: var(--neon); color: var(--neon); background: rgba(0, 242, 255, 0.1); }
 
-        .list-card { background: rgba(255,255,255,0.03); border-radius: 30px; padding: 10px; margin-bottom: 30px; }
-        .member-row { display: flex; align-items: center; justify-content: space-between; padding: 18px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .list-card { background: var(--card); border-radius: 25px; padding: 5px; }
+        .member-row { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .m-name { font-weight: 700; font-size: 14px; }
+        .m-sn { color: var(--neon); font-size: 12px; margin-right: 8px; }
 
-        /* ✨ Maintainer Section (Amit Das) */
-        .maintainer-footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        .m-tag { font-size: 11px; color: #64748b; letter-spacing: 2px; text-transform: uppercase; }
-        .m-name { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: 24px; 
-            color: var(--gold); 
-            display: block;
-            margin-top: 5px;
-            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
-        }
+        .footer { text-align: center; padding: 40px 20px; opacity: 0.7; }
+        .m-name-style { font-family: 'Dancing Script', cursive; font-size: 22px; color: #ffd700; }
     </style>
 </head>
 <body>
 
-<header class="neon-header">
-    <span class="main-title">NARAYANPUR <br> PUJA COMMITTEE</span>
-    <span class="sub-title">ESTD. 2020</span>
+<header>
+    <div class="main-title">NARAYANPUR <br> PUJA COMMITTEE</div>
 </header>
 
 <div class="container">
-    
     <div class="balance-card">
-        <span style="font-size: 11px; color: #94a3b8; letter-spacing: 2px;">TOTAL NET SAVINGS</span>
-        <div class="grand-val" id="grandTotal">₹0</div>
-        <div style="display: flex; justify-content: space-around; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-            <div><small style="color:#94a3b8">JAMA</small><br><b id="yrJama" style="color:#4ade80">₹0</b></div>
-            <div><small style="color:#94a3b8">KHARCHA</small><br><b id="yrExp" style="color:#f87171">₹0</b></div>
-        </div>
+        <small style="color:#94a3b8; letter-spacing:1px">TOTAL SAVINGS</small>
+        <div class="grand-val" id="totalBal">₹0</div>
     </div>
 
-    <div class="admin-lock-area">
-        <button class="lock-btn" id="lockBtn" onclick="openAdmin()">🔐 ADMIN LOGIN (EXPENSE)</button>
-        <div class="expense-input-box" id="expBox">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <label style="color:#f87171; font-weight:800; font-size:12px;">DAALEY KHARCHA:</label>
-                <input type="number" id="inputExp" value="0" oninput="saveExp()" 
-                       style="background:#000; border:1px solid #f87171; color:white; padding:10px; border-radius:12px; width:110px; text-align:center; font-weight:800;">
-            </div>
-        </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="searchName()" placeholder="🔍 सदस्य का नाम खोजें...">
     </div>
 
     <div class="year-scroll">
-        <button class="year-pill active" onclick="setYear('2026', this)">2026</button>
-        <button class="year-pill" onclick="setYear('2025', this)">2025</button>
-        <button class="year-pill" onclick="setYear('2024', this)">2024</button>
-        <button class="year-pill" onclick="setYear('2023', this)">2023</button>
-        <button class="year-pill" onclick="setYear('2022', this)">2022</button>
+        <button class="year-pill active">2026</button>
+        <button class="year-pill">2025</button>
+        <button class="year-pill">2024</button>
     </div>
 
-    <div class="list-card" id="listContent"></div>
+    <div class="list-card" id="memberList"></div>
 
-    <div class="maintainer-footer">
-        <span class="m-tag">Maintained By</span>
-        <span class="m-name">Amit Das</span>
+    <div class="footer">
+        <div style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">Maintained By</div>
+        <div class="m-name-style">Amit Das</div>
     </div>
 </div>
 
 <script>
-    let currentYear = '2026';
-    let isAdmin = false;
-    const target = 2500;
-    const expenses = { "2026": 0, "2025": 0, "2024": 0, "2023": 0, "2022": 0 };
-    const members = { "2026": [{n:"APU DAS", j:500}, {n:"AJAY DAS", j:2500}], "2025": [], "2024":[], "2023":[], "2022":[] };
+    const members = [
+        "APU DAS", "AJAY DAS", "SASTY DAS", "LULA DAS", "SAMBHU DAS", "PRAKASH DAS", 
+        "DILIP PAUL", "DIPU PAUL", "SUKTU DAS", "LALTU DAS", "SANJIT DAS", "AJIT DAS", 
+        "TAPAN DAS", "SUMAN RAY", "SUDHIR RAY", "PAPPU THAKOOR", "PREAM THAKOOR", 
+        "SOPAN DAS", "SANATAN DAS", "TINKU DAS", "GOPAL DAS", "RAM DAS", "DEBU DAS", 
+        "HARANU DAS", "UTTAM DAS", "GOUTAM DAS", "SHIVANI DAS", "SITA DAS", "PUTUL DAS", 
+        "RINKU DAS", "RATAN DAS", "MANIK DAS", "RATAN GHOSH", "LAXMAN DAS", "DILIP DAS", 
+        "KILIP DAS", "CHILKA DAS", "LALIT DAS", "PINTU DAS"
+    ];
 
-    function openAdmin() {
-        let p = prompt("Password Dalein:");
-        if(p === "1234") {
-            isAdmin = true;
-            document.getElementById('expBox').style.display = 'block';
-            document.getElementById('lockBtn').innerHTML = "🔓 LOGGED IN AS AMIT";
-        } else { alert("Galat Password!"); }
-    }
+    // Sample Jama Data (Aap ise badal sakte hain)
+    const jamaData = { "APU DAS": 500, "SAMBHU DAS": 2500 }; 
+    const target = 2500;
 
     function render() {
-        document.getElementById('inputExp').value = expenses[currentYear];
-        const listDiv = document.getElementById('listContent');
-        const data = members[currentYear] || [];
+        const listDiv = document.getElementById('memberList');
         listDiv.innerHTML = "";
-        let yrJ = 0;
-        data.forEach(m => {
-            yrJ += m.j;
-            let s = m.j >= target ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">DUE</b>`;
-            listDiv.innerHTML += `<div class="member-row"><div><span>${m.n}</span><br><small style="color:#94a3b8">JAMA: ₹${m.j}</small></div>${s}</div>`;
+        let total = 0;
+
+        members.forEach((name, i) => {
+            let j = jamaData[name] || 0;
+            total += j;
+            let isPaid = j >= target;
+            listDiv.innerHTML += `
+                <div class="member-row">
+                    <div>
+                        <span class="m-sn">${i + 1}.</span>
+                        <span class="m-name">${name}</span><br>
+                        <small style="color:#94a3b8">जमा: ₹${j}</small>
+                    </div>
+                    <div style="font-size:11px; font-weight:800; color:${isPaid?'#4ade80':'#f87171'}">
+                        ${isPaid ? 'PAID' : 'DUE ₹'+(target-j)}
+                    </div>
+                </div>`;
         });
-        document.getElementById('yrJama').innerText = '₹' + yrJ;
-        document.getElementById('yrExp').innerText = '₹' + expenses[currentYear];
-        
-        let totalB = 0;
-        Object.keys(expenses).forEach(y => {
-            let s = 0; (members[y] || []).forEach(m => s += m.j);
-            totalB += (s - expenses[y]);
-        });
-        document.getElementById('grandTotal').innerText = '₹' + totalB.toLocaleString();
+        document.getElementById('totalBal').innerText = '₹' + total.toLocaleString();
     }
 
-    function saveExp() { if(isAdmin) { expenses[currentYear] = parseInt(document.getElementById('inputExp').value) || 0; render(); } }
-    function setYear(y, b) { currentYear = y; document.querySelectorAll('.year-pill').forEach(x => x.classList.remove('active')); b.classList.add('active'); render(); }
+    function searchName() {
+        let input = document.getElementById('searchInput').value.toUpperCase();
+        let rows = document.getElementsByClassName('member-row');
+        for (let row of rows) {
+            row.style.display = row.innerText.toUpperCase().includes(input) ? "flex" : "none";
+        }
+    }
+
     render();
 </script>
 </body>
