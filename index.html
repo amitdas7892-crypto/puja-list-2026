@@ -3,45 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Narayanpur Puja List</title>
+    <title>Narayanpur Puja List 2026</title>
     <style>
-        body { font-family: sans-serif; background-color: #fff9c4; margin: 0; padding: 15px; text-align: center; }
-        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h1 { color: #f57f17; font-size: 20px; }
+        body { font-family: sans-serif; background-color: #fff9c4; margin: 0; padding: 10px; text-align: center; }
+        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; border-top: 5px solid #f57f17; }
+        h1 { color: #f57f17; font-size: 18px; margin: 5px 0; }
+        .stats { display: flex; justify-content: space-around; font-weight: bold; margin-top: 10px; font-size: 14px; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #fbc02d; border-radius: 25px; outline: none; box-sizing: border-box; }
         table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
-        th { background: #fbc02d; color: white; padding: 10px; }
-        td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
-        .paid { color: green; font-weight: bold; }
-        .due { color: red; font-weight: bold; }
+        th { background: #fbc02d; color: white; padding: 10px; font-size: 12px; }
+        td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; font-size: 13px; }
+        .paid-tag { color: #2e7d32; font-weight: bold; }
+        .due-tag { color: #c62828; font-weight: bold; }
+        .due-amt { color: #c62828; font-size: 10px; display: block; font-weight: normal; }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <h1>🙏उत्तर नारायणपुर यज्ञ पूजा कमेटी 2026 🙏</h1>
-        <p>कुल जमा: <b>₹ <span id="totalDisplay">0</span></b></p>
+        <h1>🙏 उत्तर नारायणपुर यज्ञ पूजा कमेटी 2026 🙏</h1>
+        <div class="stats">
+            <div style="color: #2e7d32;">जमा: ₹<span id="totalJama">0</span></div>
+            <div style="color: #c62828;">बाकी: ₹<span id="totalDue">0</span></div>
+        </div>
     </div>
+
     <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 Naam khojein...">
+
     <table id="pujaTable">
         <thead>
-            <tr><th>Naam</th><th>Chanda</th><th>Status</th></tr>
+            <tr><th>S.N. Naam</th><th>Jama</th><th>Status</th></tr>
         </thead>
-        <tbody>
-            <tr><td>01. sanatan das</td><td>₹0</td><td class="due" data-amt="0">DUE</td></tr>by
-            <tr><td>02. tinku das</td><td>₹0</td><td class="due" data-amt="0">DUE</td></tr>
-        </tbody>
+        <tbody id="tableBody"></tbody>
     </table>
+
     <script>
+        const target = 2500;
+        // Maine aapki photo se saare 40 naam yahan likh diye hain
+        const members = [
+            { n: "APU DAS", j: 0 }, { n: "AJAY DAS", j: 0 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
+            { n: "SAMBHU DAS", j: 0 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 0 },
+            { n: "SUKTU DAS", j: 0 }, { n: "LALTU DAS", j: 0 }, { n: "SANJIT DAS", j: 0 }, { n: "AJIT DAS", j: 0 },
+            { n: "TAPAN DAS", j: 0 }, { n: "SUMAN RAY", j: 0 }, { n: "SUDHIR RAY", j: 0 }, { n: "PAPPU THAKOOR", j: 0 },
+            { n: "PREAM THAKOOR", j: 0 }, { n: "SOPAN DAS", j: 0 }, { n: "SANATAN DAS", j: 0 }, { n: "TINKU DAS", j: 0 },
+            { n: "GOPAL DAS", j: 0 }, { n: "RAM DAS", j: 0 }, { n: "DEBU DAS", j: 0 }, { n: "HARANU DAS", j: 0 },
+            { n: "UTTAM DAS", j: 0 }, { n: "GOUTAM DAS", j: 0 }, { n: "SHIVANI DAS", j: 0 }, { n: "SITA DAS", j: 0 },
+            { n: "PUTUL DAS", j: 2500 }, { n: "RINKU DAS", j: 0 }, { n: "RATAN DAS", j: 0 }, { n: "MANIK DAS", j: 0 },
+            { n: "RATAN GHOSH", j: 0 }, { n: "LAXMAN DAS", j: 0 }, { n: "DILIP DAS", j: 0 }, { n: "KILIP DAS", j: 0 },
+            { n: "CHILKA DAS", j: 0 }, { n: "LALIT DAS", j: 0 }
+        ];
+
+        const tableBody = document.getElementById('tableBody');
+        let totalJ = 0, totalD = 0;
+
+        members.forEach((m, i) => {
+            let baaki = target - m.j;
+            totalJ += m.j; totalD += baaki;
+            let status = baaki <= 0 ? '<span class="paid-tag">PAID</span>' : `<span class="due-tag">DUE</span><span class="due-amt">Baaki: ₹${baaki}</span>`;
+            
+            tableBody.innerHTML += `<tr>
+                <td>${(i+1)}. ${m.n}</td>
+                <td>₹${m.j}</td>
+                <td>${status}</td>
+            </tr>`;
+        });
+
+        document.getElementById('totalJama').innerText = totalJ;
+        document.getElementById('totalDue').innerText = totalD;
+
         function search() {
-            var input = document.getElementById("searchInput").value.toUpperCase();
-            var tr = document.getElementById("pujaTable").getElementsByTagName("tr");
-            for (var i = 1; i < tr.length; i++) {
-                tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(input) > -1 ? "" : "none";
+            let filter = document.getElementById("searchInput").value.toUpperCase();
+            let tr = tableBody.getElementsByTagName("tr");
+            for (let i = 0; i < tr.length; i++) {
+                tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
             }
         }
-        var total = 0;
-        document.querySelectorAll('td[data-amt]').forEach(td => { total += parseInt(td.getAttribute('data-amt')); });
-        document.getElementById('totalDisplay').innerText = total;
     </script>
 </body>
 </html>
