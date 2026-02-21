@@ -3,54 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Narayanpur Committee Portal</title>
+    <title>Narayanpur puja Committee village-narayanpur po+ps abadpur barsoi katihar</title>
     <style>
         :root { --primary: #fb8c00; --secondary: #ef6c00; --bg: #f8fafb; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 30px; }
-        
         header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 25px 15px 50px; border-radius: 0 0 30px 30px; text-align: center; }
         .container { padding: 0 15px; max-width: 600px; margin: -30px auto 0; }
-
-        /* Puja Tabs */
         .puja-tabs { display: flex; background: rgba(255,255,255,0.2); border-radius: 12px; margin: 15px auto; max-width: 280px; padding: 4px; }
         .puja-btn { flex: 1; border: none; background: none; color: white; padding: 8px; cursor: pointer; border-radius: 10px; font-weight: 600; }
         .puja-btn.active { background: white; color: var(--secondary); }
-
-        /* Stats Row */
         .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
         .stat-card { background: white; padding: 12px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; }
+        
+        /* Chanda Target Input */
+        .admin-config { background: #fff3e0; padding: 10px; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; font-weight: bold; color: #e65100; border: 1px dashed #ff9800; }
+        .admin-config input { width: 70px; padding: 5px; border-radius: 5px; border: 1px solid #ff9800; text-align: center; }
 
-        /* Year Scroller (2020-2026) */
         .year-scroller { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0 15px; scrollbar-width: none; }
         .year-scroller::-webkit-scrollbar { display: none; }
         .year-pill { background: white; border: 1px solid #ddd; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; color: #666; }
         .year-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        /* Search Bar */
         .search-container { background: white; border-radius: 15px; padding: 12px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 15px; display: flex; align-items: center; }
-        .search-container input { border: none; width: 100%; outline: none; font-size: 16px; color: #333; }
-
-        /* Table List */
+        .search-container input { border: none; width: 100%; outline: none; font-size: 16px; }
         .list-container { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         td, th { padding: 12px; border-bottom: 1px solid #f5f5f5; font-size: 13px; text-align: left; }
         .status { padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; }
         .paid { background: #e8f5e9; color: #2e7d32; }
         .due { background: #ffebee; color: #c62828; }
-
-        /* Gallery */
-        .section-title { margin: 20px 0 10px; font-size: 16px; font-weight: bold; color: #444; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
-        .gallery-item { aspect-ratio: 1; background: #eee; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-
         .footer { text-align: center; padding: 20px; color: #aaa; font-size: 12px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size: 20px; font-weight: 800;">🛕 उत्तर नारायणपुर पूजा कमेटी </div>
+    <div style="font-size: 20px; font-weight: 800;">🛕 नारायणपुर कमेटी पोर्टल</div>
     <div class="puja-tabs">
         <button class="puja-btn active" onclick="switchPuja('yagya', this)">यज्ञ पूजा</button>
         <button class="puja-btn" onclick="switchPuja('burimaa', this)">बुरी माँ</button>
@@ -60,8 +47,12 @@
 <div class="container">
     
     <div class="stats-row">
-        <div class="stat-card"><small style="color:#888; font-size:10px;">कुल जमा</small><div id="totalJama" style="color:green; font-weight:bold; font-size:18px;">₹0</div></div>
-        <div class="stat-card"><small style="color:#888; font-size:10px;">कुल बाकी</small><div id="totalDue" style="color:red; font-weight:bold; font-size:18px;">₹0</div></div>
+        <div class="stat-card"><small>कुल जमा</small><div id="totalJama" style="color:green; font-weight:bold; font-size:18px;">₹0</div></div>
+        <div class="stat-card"><small>कुल बाकी</small><div id="totalDue" style="color:red; font-weight:bold; font-size:18px;">₹0</div></div>
+    </div>
+
+    <div class="admin-config">
+        🎯 इस साल का चंदा (Target): ₹ <input type="number" id="chandaTarget" value="2500" oninput="render()">
     </div>
 
     <div class="year-scroller" id="yearBox">
@@ -70,8 +61,6 @@
         <div class="year-pill" onclick="setYear('2024', this)">2024</div>
         <div class="year-pill" onclick="setYear('2023', this)">2023</div>
         <div class="year-pill" onclick="setYear('2022', this)">2022</div>
-        <div class="year-pill" onclick="setYear('2021', this)">2021</div>
-        <div class="year-pill" onclick="setYear('2020', this)">2020</div>
     </div>
 
     <div class="search-container">
@@ -85,45 +74,34 @@
         </table>
     </div>
 
-    <div class="section-title">📸 पूजा गैलरी</div>
-    <div class="gallery-grid">
-        <div class="gallery-item"><img src="https://via.placeholder.com/150"></div>
-        <div class="gallery-item"><img src="https://via.placeholder.com/150"></div>
-        <div class="gallery-item"><img src="https://via.placeholder.com/150"></div>
-    </div>
-
     <div class="footer">ADMIN: <b>AMIT DAS</b></div>
 </div>
 
 <script>
     let currentPuja = 'yagya';
     let currentYear = '2026';
-    const target = 2500;
 
     const allData = {
         "yagya": {
             "2026": [
-                { n: "APU DAS", j: 0 }, { n: "AJAY DAS", j: 0 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
-                { n: "SAMBHU DAS", j: 0 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 0 },
-                { n: "SUKTU DAS", j: 0 }, { n: "LALTU DAS", j: 0 }, { n: "SANJIT DAS", j: 0 }, { n: "AJIT DAS", j: 0 },
-                { n: "TAPAN DAS", j: 0 }, { n: "SUMAN RAY", j: 0 }, { n: "SUDHIR RAY", j: 0 }, { n: "PAPPU THAKOOR", j: 0 },
-                { n: "PREAM THAKOOR", j: 0 }, { n: "SOPAN DAS", j: 0 }, { n: "SANATAN DAS", j: 0 }, { n: "TINKU DAS", j: 0 }
+                { n: "APU DAS", j: 2500 }, { n: "AJAY DAS", j: 1000 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 500 },
+                { n: "SAMBHU DAS", j: 2500 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 2500 }, { n: "DIPU PAUL", j: 0 }
             ],
-            "2025": [], "2024": [], "2023": [], "2022": [], "2021": [], "2020": []
+            "2025": [], "2024": [], "2023": [], "2022": []
         },
-        "burimaa": {
-            "2026": [{ n: "BURIMAA SAMPLE", j: 0 }],
-            "2025": [], "2024": [], "2023": [], "2022": [], "2021": [], "2020": []
-        }
+        "burimaa": { "2026": [{ n: "SAMPLE NAME", j: 0 }], "2025": [] }
     };
 
     function render() {
+        const target = parseInt(document.getElementById('chandaTarget').value) || 0;
         const tableBody = document.getElementById('tableBody');
         const data = (allData[currentPuja] && allData[currentPuja][currentYear]) ? allData[currentPuja][currentYear] : [];
         tableBody.innerHTML = "";
         let tJ = 0, tD = 0;
+
         data.forEach(m => {
             let baaki = target - m.j;
+            if(baaki < 0) baaki = 0;
             tJ += m.j; tD += baaki;
             tableBody.innerHTML += `<tr><td><b>${m.n}</b></td><td>₹${m.j}</td><td><span class="status ${m.j>=target?'paid':'due'}">${m.j>=target?'PAID':'DUE'}</span></td></tr>`;
         });
