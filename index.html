@@ -7,29 +7,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { --neon: #00f2ff; --bg: #070b14; --card: rgba(255, 255, 255, 0.05); --gold: #ffd700; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 50px; }
-        header { padding: 40px 20px; text-align: center; background: radial-gradient(circle at center, #1a233a 0%, #070b14 100%); }
-        .main-title { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 900; text-shadow: 0 0 10px var(--neon); text-transform: uppercase; line-height: 1.2; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 30px; }
+        
+        /* 🎇 Neon Header */
+        header { padding: 50px 20px; text-align: center; background: radial-gradient(circle at center, #1a233a 0%, #070b14 100%); }
+        .main-title { font-family: 'Cinzel', serif; font-size: 26px; font-weight: 900; text-shadow: 0 0 10px var(--neon); text-transform: uppercase; letter-spacing: 2px; }
+
         .container { padding: 0 16px; max-width: 480px; margin: 0 auto; }
 
-        /* Puja Switcher */
-        .puja-nav { display: flex; background: rgba(255,255,255,0.05); border-radius: 15px; padding: 5px; margin: 20px 0; border: 1px solid rgba(0,242,255,0.2); }
-        .p-btn { flex: 1; border: none; background: none; color: #94a3b8; padding: 12px; cursor: pointer; border-radius: 12px; font-weight: 700; transition: 0.3s; }
-        .p-btn.active { background: var(--neon); color: #000; box-shadow: 0 0 15px var(--neon); }
+        /* 🔄 Puja/Kharcha Tabs */
+        .tab-nav { display: flex; background: var(--card); border-radius: 15px; padding: 5px; margin: 20px 0; border: 1px solid rgba(0,242,255,0.2); }
+        .tab-btn { flex: 1; border: none; background: none; color: #94a3b8; padding: 12px; cursor: pointer; border-radius: 12px; font-weight: 700; }
+        .tab-btn.active { background: var(--neon); color: #000; box-shadow: 0 0 10px var(--neon); }
 
-        /* Dashboard */
-        .balance-card { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        .target-badge { display: inline-block; background: rgba(255, 215, 0, 0.1); color: var(--gold); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 10px; border: 1px solid var(--gold); }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
+        /* 📊 Dashboard Card */
+        .balance-card { background: var(--card); border-radius: 25px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); text-align: center; margin-bottom: 20px; }
+        .target-badge { display: inline-block; background: rgba(255,215,0,0.1); color: var(--gold); padding: 5px 15px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid var(--gold); margin-bottom: 10px; }
 
-        /* Search & List */
-        .search-box { margin: 20px 0; }
-        .search-box input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #fff; outline: none; box-sizing: border-box; }
-        .list-card { background: var(--card); border-radius: 25px; padding: 5px; }
-        .member-row { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        
-        .footer { text-align: center; padding: 40px; }
-        .amit-style { font-family: 'Dancing Script', cursive; font-size: 24px; color: var(--gold); }
+        /* Search */
+        .search-box input { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); background: var(--card); color: #fff; outline: none; box-sizing: border-box; margin-bottom: 20px; }
+
+        /* Rows */
+        .list-card { background: var(--card); border-radius: 25px; padding: 5px; margin-bottom: 40px; }
+        .row-item { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .row-item:last-child { border-bottom: none; }
+
+        /* ✨ Stylish Footer Name */
+        .amit-footer { text-align: center; padding: 50px 20px 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .m-by { font-size: 10px; color: #64748b; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; }
+        .m-name { font-family: 'Dancing Script', cursive; font-size: 28px; color: var(--gold); display: block; margin-top: 8px; filter: drop-shadow(0 0 8px rgba(255,215,0,0.4)); }
     </style>
 </head>
 <body>
@@ -39,94 +45,82 @@
 </header>
 
 <div class="container">
-    <div class="puja-nav">
-        <button id="btn-yagya" class="p-btn active" onclick="switchPuja('yagya')">यज्ञ पूजा</button>
-        <button id="btn-burimaa" class="p-btn" onclick="switchPuja('burimaa')">बुरी माँ</button>
+    <div class="tab-nav">
+        <button id="btn-yagya" class="tab-btn active" onclick="switchTab('yagya')">यज्ञ पूजा</button>
+        <button id="btn-burimaa" class="tab-btn" onclick="switchTab('burimaa')">बुरी माँ</button>
+        <button id="btn-kharcha" class="tab-btn" onclick="switchTab('kharcha')">खर्चा</button>
     </div>
 
     <div class="balance-card">
-        <div class="target-badge">🎯 लक्ष्य: ₹<span id="targetVal">2500</span></div>
-        <br><small style="color:#94a3b8">KUL JAMA (TOTAL COLLECTION)</small>
-        <div id="totalJama" style="font-size: 32px; font-weight: 800; margin: 5px 0; color: var(--neon);">₹0</div>
-        <div class="stats-grid">
-            <div><small style="color:#94a3b8">BAAKI (DUE)</small><br><b id="totalDue" style="color:#f87171">₹0</b></div>
-            <div><small style="color:#94a3b8">MEMBERS</small><br><b style="color:#fff">39</b></div>
-        </div>
+        <div id="targetArea" class="target-badge">🎯 TARGET: ₹<span id="targetVal">2500</span></div>
+        <br><small id="sumLabel" style="color:#94a3b8">TOTAL COLLECTION</small>
+        <div id="totalVal" style="font-size: 34px; font-weight: 800; margin: 8px 0; color: var(--neon);">₹0</div>
     </div>
 
     <div class="search-box">
-        <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 सदस्य का नाम खोजें...">
+        <input type="text" id="searchInput" onkeyup="filter()" placeholder="🔍 यहाँ खोजें (नाम या सामान)...">
     </div>
 
     <div class="list-card" id="mainList"></div>
 
-    <div class="footer">
-        <small style="color:#64748b; letter-spacing:2px">MAINTAINED BY</small><br>
-        <span class="amit-style">Amit Das</span>
+    <div class="amit-footer">
+        <span class="m-by">Maintained By</span>
+        <span class="m-name">Amit Das</span>
     </div>
 </div>
 
 <script>
-    let currentPuja = 'yagya';
-    const membersList = [
-        "APU DAS", "AJAY DAS", "SASTY DAS", "LULA DAS", "SAMBHU DAS", "PRAKASH DAS", 
-        "DILIP PAUL", "DIPU PAUL", "SUKTU DAS", "LALTU DAS", "SANJIT DAS", "AJIT DAS", 
-        "TAPAN DAS", "SUMAN RAY", "SUDHIR RAY", "PAPPU THAKOOR", "PREAM THAKOOR", 
-        "SOPAN DAS", "SANATAN DAS", "TINKU DAS", "GOPAL DAS", "RAM DAS", "DEBU DAS", 
-        "HARANU DAS", "UTTAM DAS", "GOUTAM DAS", "SHIVANI DAS", "SITA DAS", "PUTUL DAS", 
-        "RINKU DAS", "RATAN DAS", "MANIK DAS", "RATAN GHOSH", "LAXMAN DAS", "DILIP DAS", 
-        "KILIP DAS", "CHILKA DAS", "LALIT DAS", "PINTU DAS"
-    ];
+    let currentTab = 'yagya';
+    const members = ["APU DAS", "AJAY DAS", "SASTY DAS", "LULA DAS", "SAMBHU DAS", "PRAKASH DAS", "DILIP PAUL", "DIPU PAUL", "SUKTU DAS", "LALTU DAS", "SANJIT DAS", "AJIT DAS", "TAPAN DAS", "SUMAN RAY", "SUDHIR RAY", "PAPPU THAKOOR", "PREAM THAKOOR", "SOPAN DAS", "SANATAN DAS", "TINKU DAS", "GOPAL DAS", "RAM DAS", "DEBU DAS", "HARANU DAS", "UTTAM DAS", "GOUTAM DAS", "SHIVANI DAS", "SITA DAS", "PUTUL DAS", "RINKU DAS", "RATAN DAS", "MANIK DAS", "RATAN GHOSH", "LAXMAN DAS", "DILIP DAS", "KILIP DAS", "CHILKA DAS", "LALIT DAS", "PINTU DAS"];
 
-    // Data Store (Yahan aap paise add kar sakte hain)
-    const collections = {
+    const collectionData = {
         "yagya": { "APU DAS": 500, "SAMBHU DAS": 2500 },
         "burimaa": { "APU DAS": 500, "AJAY DAS": 200 }
     };
 
-    function render() {
-        const target = (currentPuja === 'yagya') ? 2500 : 500;
-        document.getElementById('targetVal').innerText = target;
-        
-        const listDiv = document.getElementById('mainList');
-        listDiv.innerHTML = "";
-        
-        let tJama = 0;
-        let tDue = 0;
+    const expenseData = [
+        { item: "Tent & Light", cost: 12000, date: "2026" },
+        { item: "Bhog/Prasad", cost: 5500, date: "2026" },
+        { item: "Puja Samagri", cost: 2000, date: "2026" }
+    ];
 
-        membersList.forEach((name, i) => {
-            let jama = collections[currentPuja][name] || 0;
-            let due = Math.max(0, target - jama);
-            tJama += jama;
-            tDue += due;
-
-            let status = jama >= target ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">DUE ₹${due}</b>`;
-            
-            listDiv.innerHTML += `
-                <div class="member-row">
-                    <div>
-                        <span style="color:var(--neon); font-size:12px;">${i+1}.</span> 
-                        <span style="font-weight:700; font-size:14px;">${name}</span><br>
-                        <small style="color:#94a3b8">जमा: ₹${jama}</small>
-                    </div>
-                    <div style="text-align:right;">${status}</div>
-                </div>`;
-        });
-
-        document.getElementById('totalJama').innerText = '₹' + tJama.toLocaleString();
-        document.getElementById('totalDue').innerText = '₹' + tDue.toLocaleString();
-    }
-
-    function switchPuja(p) {
-        currentPuja = p;
-        document.getElementById('btn-yagya').classList.toggle('active', p === 'yagya');
-        document.getElementById('btn-burimaa').classList.toggle('active', p === 'burimaa');
+    function switchTab(t) {
+        currentTab = t;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + t).classList.add('active');
         render();
     }
 
-    function search() {
+    function render() {
+        const listDiv = document.getElementById('mainList');
+        const target = (currentTab === 'burimaa') ? 500 : 2500;
+        listDiv.innerHTML = "";
+        let total = 0;
+
+        if (currentTab === 'kharcha') {
+            document.getElementById('targetArea').style.visibility = 'hidden';
+            document.getElementById('sumLabel').innerText = "TOTAL EXPENSE (KHARCHA)";
+            expenseData.forEach(e => {
+                total += e.cost;
+                listDiv.innerHTML += `<div class="row-item"><div><b>${e.item}</b><br><small style="color:#94a3b8">${e.date}</small></div><b style="color:#f87171">₹${e.cost}</b></div>`;
+            });
+        } else {
+            document.getElementById('targetArea').style.visibility = 'visible';
+            document.getElementById('targetVal').innerText = target;
+            document.getElementById('sumLabel').innerText = "TOTAL COLLECTION (JAMA)";
+            members.forEach((name, i) => {
+                let j = collectionData[currentTab][name] || 0;
+                total += j;
+                let status = j >= target ? `<b style="color:#4ade80">PAID</b>` : `<b style="color:#f87171">₹${target-j}</b>`;
+                listDiv.innerHTML += `<div class="row-item"><div><small style="color:var(--neon)">${i+1}.</small> <b>${name}</b></div><div>${status}</div></div>`;
+            });
+        }
+        document.getElementById('totalVal').innerText = '₹' + total.toLocaleString();
+    }
+
+    function filter() {
         let input = document.getElementById('searchInput').value.toUpperCase();
-        let rows = document.getElementsByClassName('member-row');
+        let rows = document.getElementsByClassName('row-item');
         for (let r of rows) { r.style.display = r.innerText.toUpperCase().includes(input) ? "flex" : "none"; }
     }
 
