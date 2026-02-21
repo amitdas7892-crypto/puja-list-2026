@@ -5,41 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Narayanpur Puja List 2026</title>
     <style>
-        body { font-family: sans-serif; background-color: #fff9c4; margin: 0; padding: 10px; text-align: center; }
-        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; border-top: 5px solid #f57f17; }
-        h1 { color: #f57f17; font-size: 18px; margin: 5px 0; }
-        .stats { display: flex; justify-content: space-around; font-weight: bold; margin-top: 10px; font-size: 14px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #fbc02d; border-radius: 25px; outline: none; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
-        th { background: #fbc02d; color: white; padding: 10px; font-size: 12px; }
-        td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; font-size: 13px; }
+        body { font-family: sans-serif; background-color: #fffde7; margin: 0; padding: 10px; text-align: center; }
+        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; border: 2px solid #ff9800; }
+        h1 { color: #e65100; font-size: 18px; margin: 10px 0; }
+        .photo-frame { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #ff9800; margin: 0 auto 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .stats { display: flex; justify-content: space-around; font-weight: bold; font-size: 15px; border-top: 1px solid #eee; pt: 10px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ffb74d; border-radius: 25px; outline: none; box-sizing: border-box; font-size: 16px; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        th { background: #ff9800; color: white; padding: 12px; font-size: 13px; }
+        td { padding: 12px; border-bottom: 1px solid #f5f5f5; text-align: left; font-size: 14px; vertical-align: top; }
         .paid-tag { color: #2e7d32; font-weight: bold; }
-        .due-tag { color: #c62828; font-weight: bold; }
-        .due-amt { color: #c62828; font-size: 10px; display: block; font-weight: normal; }
+        .due-tag { color: #d32f2f; font-weight: bold; }
+        .due-amt { color: #d32f2f; font-size: 11px; display: block; margin-top: 2px; }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <img src="https://i.pinimg.com/736x/ec/2e/5a/ec2e5a9071062957132863952796e680.jpg" 
-             alt="Radha Krishna" 
-             style="width:120px; height:120px; border-radius:50%; object-fit: cover; border: 3px solid #f57f17; margin-bottom: 10px;">
-        
+        <div class="photo-frame">
+            <img src="https://i.pinimg.com/originals/ec/2e/5a/ec2e5a9071062957132863952796e680.jpg" alt="Radha Krishna">
+        </div>
         <h1>🙏 उत्तर नारायणपुर यज्ञ पूजा कमेटी 2026 🙏</h1>
         <div class="stats">
             <div style="color: #2e7d32;">जमा: ₹<span id="totalJama">0</span></div>
-            <div style="color: #c62828;">बाकी: ₹<span id="totalDue">0</span></div>
+            <div style="color: #d32f2f;">बाकी: ₹<span id="totalDue">0</span></div>
         </div>
     </div>
 
-    <div class="card">
-        <h1>🙏 उत्तर नारायणपुर यज्ञ पूजा कमेटी 2026 🙏</h1>
-        <div class="stats">
-            <div style="color: #2e7d32;">जमा: ₹<span id="totalJama">0</span></div>
-            <div style="color: #c62828;">बाकी: ₹<span id="totalDue">0</span></div>
-        </div>
-    </div>
-
-    <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 Naam khojein...">
+    <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 Naam khojein (e.g. Apu, Sanatan)...">
 
     <table id="pujaTable">
         <thead>
@@ -50,7 +44,7 @@
 
     <script>
         const target = 2500;
-        // Maine aapki photo se saare 40 naam yahan likh diye hain
+        // Aapki photo se 1 se 40 tak ke naam
         const members = [
             { n: "APU DAS", j: 0 }, { n: "AJAY DAS", j: 0 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
             { n: "SAMBHU DAS", j: 0 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 0 },
@@ -61,7 +55,7 @@
             { n: "UTTAM DAS", j: 0 }, { n: "GOUTAM DAS", j: 0 }, { n: "SHIVANI DAS", j: 0 }, { n: "SITA DAS", j: 0 },
             { n: "PUTUL DAS", j: 0 }, { n: "RINKU DAS", j: 0 }, { n: "RATAN DAS", j: 0 }, { n: "MANIK DAS", j: 0 },
             { n: "RATAN GHOSH", j: 0 }, { n: "LAXMAN DAS", j: 0 }, { n: "DILIP DAS", j: 0 }, { n: "KILIP DAS", j: 0 },
-            { n: "CHILKA DAS", j: 0 }, { n: "LALIT DAS", j: 0 }
+            { n: "CHILKA DAS", j: 0 }, { n: "LALIT DAS", j: 0 }, { n: "AMIT DAS", j: 0 }, { n: "KUMAR DAS", j: 0 }
         ];
 
         const tableBody = document.getElementById('tableBody');
@@ -70,7 +64,7 @@
         members.forEach((m, i) => {
             let baaki = target - m.j;
             totalJ += m.j; totalD += baaki;
-            let status = baaki <= 0 ? '<span class="paid-tag">PAID</span>' : `<span class="due-tag">DUE</span><span class="due-amt">Baaki: ₹${baaki}</span>`;
+            let status = baaki <= 0 ? '<span class="paid-tag">PAID</span>' : `<span class="due-tag">DUE</span><span class="due-amt">बाकी: ₹${baaki}</span>`;
             
             tableBody.innerHTML += `<tr>
                 <td>${(i+1)}. ${m.n}</td>
