@@ -6,25 +6,26 @@
     <title>Narayanpur Puja List 2026</title>
     <style>
         body { font-family: sans-serif; background-color: #fffde7; margin: 0; padding: 10px; text-align: center; }
-        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; border: 2px solid #ff9800; }
+        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; border: 2px solid #ff9800; position: relative; }
         h1 { color: #e65100; font-size: 18px; margin: 10px 0; }
-        .photo-frame { width: 120px; height: 120px; border-radius: 50%; border: 4px solid #ff9800; margin: 0 auto 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; }
+        /* Photo Frame Settings */
+        .photo-frame { width: 130px; height: 130px; border-radius: 50%; border: 4px solid #ff9800; margin: 0 auto 10px; overflow: hidden; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-        .stats { display: flex; justify-content: space-around; font-weight: bold; font-size: 15px; border-top: 1px solid #eee; pt: 10px; }
+        .stats { display: flex; justify-content: space-around; font-weight: bold; font-size: 15px; border-top: 1px solid #eee; padding-top: 10px; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ffb74d; border-radius: 25px; outline: none; box-sizing: border-box; font-size: 16px; }
         table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         th { background: #ff9800; color: white; padding: 12px; font-size: 13px; }
         td { padding: 12px; border-bottom: 1px solid #f5f5f5; text-align: left; font-size: 14px; vertical-align: top; }
         .paid-tag { color: #2e7d32; font-weight: bold; }
         .due-tag { color: #d32f2f; font-weight: bold; }
-        .due-amt { color: #d32f2f; font-size: 11px; display: block; margin-top: 2px; }
+        .due-amt { color: #d32f2f; font-size: 11px; display: block; margin-top: 2px; font-weight: normal; }
     </style>
 </head>
 <body>
 
     <div class="card">
         <div class="photo-frame">
-            <img src="https://i.pinimg.com/originals/ec/2e/5a/ec2e5a9071062957132863952796e680.jpg" alt="Radha Krishna">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_u_K4p95O7N8vSg9S9T78h9_YfXp0_9sSFA&s" alt="Radha Krishna">
         </div>
         <h1>🙏 उत्तर नारायणपुर यज्ञ पूजा कमेटी 2026 🙏</h1>
         <div class="stats">
@@ -33,7 +34,7 @@
         </div>
     </div>
 
-    <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 Naam khojein (e.g. Apu, Sanatan)...">
+    <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 Naam khojein...">
 
     <table id="pujaTable">
         <thead>
@@ -44,7 +45,7 @@
 
     <script>
         const target = 2500;
-        // Aapki photo se 1 se 40 tak ke naam
+        // 1 se 40 tak ke naam jo aapne photo mein diye thay
         const members = [
             { n: "APU DAS", j: 0 }, { n: "AJAY DAS", j: 0 }, { n: "SASTY DAS", j: 0 }, { n: "LULA DAS", j: 0 },
             { n: "SAMBHU DAS", j: 0 }, { n: "PRAKASH DAS", j: 0 }, { n: "DILIP PAUL", j: 0 }, { n: "DIPU PAUL", j: 0 },
@@ -55,7 +56,7 @@
             { n: "UTTAM DAS", j: 0 }, { n: "GOUTAM DAS", j: 0 }, { n: "SHIVANI DAS", j: 0 }, { n: "SITA DAS", j: 0 },
             { n: "PUTUL DAS", j: 0 }, { n: "RINKU DAS", j: 0 }, { n: "RATAN DAS", j: 0 }, { n: "MANIK DAS", j: 0 },
             { n: "RATAN GHOSH", j: 0 }, { n: "LAXMAN DAS", j: 0 }, { n: "DILIP DAS", j: 0 }, { n: "KILIP DAS", j: 0 },
-            { n: "CHILKA DAS", j: 0 }, { n: "LALIT DAS", j: 0 }, { n: "AMIT DAS", j: 0 }, { n: "KUMAR DAS", j: 0 }
+            { n: "CHILKA DAS", j: 0 }, { n: "LALIT DAS", j: 0 }
         ];
 
         const tableBody = document.getElementById('tableBody');
