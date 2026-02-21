@@ -11,35 +11,40 @@
         header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 25px 15px 50px; border-radius: 0 0 30px 30px; text-align: center; }
         .container { padding: 0 15px; max-width: 600px; margin: -30px auto 0; }
 
-        /* Gallery Section */
-        .section-title { margin: 20px 0 10px; font-size: 16px; font-weight: bold; color: #444; text-align: left; display: flex; align-items: center; gap: 5px; }
-        .gallery-container { background: white; padding: 10px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .gallery-item { aspect-ratio: 1; background: #eee; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; position: relative; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-        .add-photo { display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; color: #fb8c00; font-weight: bold; text-decoration: none; border: 2px dashed #fb8c00; }
+        /* Search Bar Style */
+        .search-container { background: white; border-radius: 15px; padding: 12px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 15px; display: flex; align-items: center; }
+        .search-container input { border: none; width: 100%; outline: none; font-size: 16px; color: #333; }
 
         /* Stats & Tabs */
         .puja-tabs { display: flex; background: rgba(255,255,255,0.2); border-radius: 12px; margin: 15px auto; max-width: 280px; padding: 4px; }
         .puja-btn { flex: 1; border: none; background: none; color: white; padding: 8px; cursor: pointer; border-radius: 10px; font-weight: 600; }
         .puja-btn.active { background: white; color: var(--secondary); }
+        
         .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        .stat-card { background: white; padding: 12px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
+        .stat-card { background: white; padding: 12px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; }
 
-        .list-container { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        /* List Section */
+        .list-container { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         td, th { padding: 12px; border-bottom: 1px solid #f5f5f5; font-size: 13px; text-align: left; }
-        .status { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; }
+        th { background: #fafafa; color: #888; text-transform: uppercase; font-size: 11px; }
+        .status { padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; }
         .paid { background: #e8f5e9; color: #2e7d32; }
         .due { background: #ffebee; color: #c62828; }
-        
-        .footer { text-align: center; padding: 30px; color: #aaa; font-size: 12px; }
+
+        /* Gallery Section */
+        .section-title { margin: 20px 0 10px; font-size: 16px; font-weight: bold; color: #444; text-align: left; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+        .gallery-item { aspect-ratio: 1; background: #eee; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        .footer { text-align: center; padding: 20px; color: #aaa; font-size: 12px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size: 20px; font-weight: 800;">🛕 उत्तर नारायणपुर पूजा कमेटी </div>
+    <div style="font-size: 20px; font-weight: 800;">🛕 नारायणपुर कमेटी पोर्टल</div>
     <div class="puja-tabs">
         <button class="puja-btn active" onclick="switchPuja('yagya', this)">यज्ञ पूजा</button>
         <button class="puja-btn" onclick="switchPuja('burimaa', this)">बुरी माँ</button>
@@ -48,32 +53,27 @@
 
 <div class="container">
     
-    <div class="section-title">📸 फोटो गैलरी (Gallery)</div>
-    <div class="gallery-container">
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://img.freepik.com/free-photo/god-krishna-radha-painting_23-2151151603.jpg" alt="Puja">
-            </div>
-            <div class="gallery-item">
-                <img src="https://img.freepik.com/free-photo/view-indian-temple-architecture_23-2151044432.jpg" alt="Puja">
-            </div>
-            <a href="https://github.com/" target="_blank" class="gallery-item add-photo">
-                <span style="font-size: 20px;">+</span>
-                <span>Photo Dalein</span>
-            </a>
-        </div>
+    <div class="stats-row">
+        <div class="stat-card"><small style="color:#888; font-size:10px;">कुल जमा</small><div id="totalJama" style="color:green; font-weight:bold; font-size:18px;">₹0</div></div>
+        <div class="stat-card"><small style="color:#888; font-size:10px;">कुल बाकी</small><div id="totalDue" style="color:red; font-weight:bold; font-size:18px;">₹0</div></div>
     </div>
 
-    <div class="stats-row">
-        <div class="stat-card"><small>जमा</small><div id="totalJama" style="color:green; font-weight:bold;">₹0</div></div>
-        <div class="stat-card"><small>बाकी</small><div id="totalDue" style="color:red; font-weight:bold;">₹0</div></div>
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="search()" placeholder="🔍 सदस्य का नाम खोजें...">
     </div>
 
     <div class="list-container">
         <table>
-            <thead><tr><th>सदस्य</th><th>राशि</th><th>Status</th></tr></thead>
+            <thead><tr><th>सदस्य</th><th>राशि</th><th>स्थिति</th></tr></thead>
             <tbody id="tableBody"></tbody>
         </table>
+    </div>
+
+    <div class="section-title">📸 फोटो गैलरी</div>
+    <div class="gallery-grid">
+        <div class="gallery-item"><img src="https://img.freepik.com/free-photo/god-krishna-radha-painting_23-2151151603.jpg"></div>
+        <div class="gallery-item"><img src="https://img.freepik.com/free-photo/view-indian-temple-architecture_23-2151044432.jpg"></div>
+        <div class="gallery-item" style="display:flex; align-items:center; justify-content:center; background:#fff; border:2px dashed #fb8c00; color:#fb8c00; font-size:24px; font-weight:bold;">+</div>
     </div>
 
     <div class="footer">CREATED BY <b>AMIT DAS</b></div>
@@ -90,7 +90,7 @@
             { n: "TAPAN DAS", j: 0 }, { n: "SUMAN RAY", j: 0 }, { n: "SUDHIR RAY", j: 0 }, { n: "PAPPU THAKOOR", j: 0 },
             { n: "PREAM THAKOOR", j: 0 }, { n: "SOPAN DAS", j: 0 }, { n: "SANATAN DAS", j: 0 }, { n: "TINKU DAS", j: 0 }
         ],
-        "burimaa": [{ n: "SAMPLE NAME", j: 0 }]
+        "burimaa": [{ n: "BURIMAA MEMBER 1", j: 0 }]
     };
 
     function render() {
@@ -101,7 +101,7 @@
         data.forEach(m => {
             let baaki = target - m.j;
             tJ += m.j; tD += baaki;
-            tableBody.innerHTML += `<tr><td>${m.n}</td><td>₹${m.j}</td><td><span class="status ${m.j>=target?'paid':'due'}">${m.j>=target?'PAID':'DUE'}</span></td></tr>`;
+            tableBody.innerHTML += `<tr><td><b>${m.n}</b></td><td>₹${m.j}</td><td><span class="status ${m.j>=target?'paid':'due'}">${m.j>=target?'PAID':'DUE'}</span></td></tr>`;
         });
         document.getElementById('totalJama').innerText = '₹' + tJ;
         document.getElementById('totalDue').innerText = '₹' + tD;
@@ -112,6 +112,15 @@
         document.querySelectorAll('.puja-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         render();
+    }
+
+    // Search function
+    function search() {
+        let filter = document.getElementById("searchInput").value.toUpperCase();
+        let tr = document.getElementById('tableBody').getElementsByTagName("tr");
+        for (let i = 0; i < tr.length; i++) {
+            tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
     }
     render();
 </script>
